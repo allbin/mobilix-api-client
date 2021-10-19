@@ -16,4 +16,5 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   entitySchemas: entitySchemaOperations(opts),
 });
 
-export default MobilixApiClient;
+export { MobilixApiClient };
+export * from './api';
