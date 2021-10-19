@@ -1,17 +1,18 @@
-import fetch, { RequestInit, HeadersInit } from 'node-fetch';
+import axios, { AxiosRequestConfig, Method } from 'axios';
 
 import { MobilixClientOptions } from './options';
 
 const call = async <R, T>(
-  method: string,
+  method: Method,
   url: string,
   opts: MobilixClientOptions & { body?: R },
 ): Promise<T> => {
-  const req: RequestInit = {
+  const req: AxiosRequestConfig<R> = {
     method,
     headers: {},
+    baseURL: opts.baseUrl,
   };
-  const auth: HeadersInit = opts.token
+  const auth: AxiosRequestConfig['headers'] = opts.token
     ? typeof opts.token === 'function'
       ? {
           Authorization: `Bearer ${await opts.token()}`,
@@ -27,12 +28,10 @@ const call = async <R, T>(
   };
 
   if (opts.body) {
-    req.body = JSON.stringify(opts.body);
+    req.data = opts.body;
   }
 
-  return (await fetch(`${opts.baseUrl}${url}`, req).then((res) =>
-    res.json(),
-  )) as T;
+  return await axios.request<T>({ url, ...req }).then((r) => r.data);
 };
 
 export default call;
