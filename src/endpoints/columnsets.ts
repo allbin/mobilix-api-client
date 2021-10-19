@@ -1,3 +1,5 @@
+import querystring from 'querystring';
+
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
@@ -15,12 +17,16 @@ export const columnSetOperations = (
   opts: MobilixClientOptions,
 ): ColumnSetOperations => ({
   list: async (entity_type_id) => {
-    const url = entity_type_id
-      ? `/columnsets?entity_type_id=${entity_type_id}`
-      : `/columnsets`;
-    return await call<undefined, ApiColumnSet[]>('GET', url, {
-      ...opts,
-    });
+    const qstring = entity_type_id
+      ? `?${querystring.stringify({ entity_type_id })}`
+      : '';
+    return await call<undefined, ApiColumnSet[]>(
+      'GET',
+      `/columnsets${qstring}`,
+      {
+        ...opts,
+      },
+    );
   },
   get: async (id) =>
     await call<undefined, ApiColumnSet>('GET', `/columnsets/${id}`, {
