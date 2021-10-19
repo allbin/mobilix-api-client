@@ -1,19 +1,32 @@
 import { MobilixClientOptions } from './options';
 
-import { entityTypeOperations, EntityTypeOperations } from './entity_types';
 import {
+  columnSetOperations,
+  ColumnSetOperations,
+  contractorAgentOperations,
+  ContractorAgentOperations,
   entitySchemaOperations,
   EntitySchemaOperations,
-} from './entity_schemas';
+  entityTypeOperations,
+  EntityTypeOperations,
+  workOrderOperations,
+  WorkOrderOperations,
+} from './endpoints';
 
 interface IMobilixApiClient {
-  entityTypes: EntityTypeOperations;
+  columnSets: ColumnSetOperations;
+  contractorAgents: ContractorAgentOperations;
   entitySchemas: EntitySchemaOperations;
+  entityTypes: EntityTypeOperations;
+  workOrders: WorkOrderOperations;
 }
 
 const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
-  entityTypes: entityTypeOperations(opts),
+  columnSets: columnSetOperations(opts),
+  contractorAgents: contractorAgentOperations(opts),
   entitySchemas: entitySchemaOperations(opts),
+  entityTypes: entityTypeOperations(opts),
+  workOrders: workOrderOperations(opts),
 });
 
 export { MobilixApiClient };

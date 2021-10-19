@@ -1,13 +1,16 @@
-import call from './call';
+import call from '../call';
 
-import type { MobilixClientOptions } from './options';
-import type { ApiEntitySchemaRequest, ApiEntitySchema } from './api';
+import type { MobilixClientOptions } from '../options';
+import type { ApiEntitySchemaRequest, ApiEntitySchema } from '../api';
 
 export interface EntitySchemaOperations {
   list: () => Promise<ApiEntitySchema[]>;
   get: (id: string) => Promise<ApiEntitySchema>;
-  post: (schema: ApiEntitySchemaRequest) => Promise<ApiEntitySchema>;
-  put: (id: string, schema: ApiEntitySchemaRequest) => Promise<ApiEntitySchema>;
+  create: (schema: ApiEntitySchemaRequest) => Promise<ApiEntitySchema>;
+  update: (
+    id: string,
+    schema: ApiEntitySchemaRequest,
+  ) => Promise<ApiEntitySchema>;
   delete: (id: string) => Promise<ApiEntitySchema>;
 }
 
@@ -22,13 +25,13 @@ export const entitySchemaOperations = (
     await call<undefined, ApiEntitySchema>('GET', `/entity_schemas/${id}`, {
       ...opts,
     }),
-  post: async (schema: ApiEntitySchemaRequest) =>
+  create: async (schema: ApiEntitySchemaRequest) =>
     await call<ApiEntitySchemaRequest, ApiEntitySchema>(
       'POST',
       `/entity_schemas`,
       { ...opts, body: schema },
     ),
-  put: async (id: string, schema: ApiEntitySchemaRequest) =>
+  update: async (id: string, schema: ApiEntitySchemaRequest) =>
     await call<ApiEntitySchemaRequest, ApiEntitySchema>(
       'PUT',
       `/entity_schemas/${id}`,
