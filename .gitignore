@@ -1,0 +1,8 @@
+build
+lib
+node_modules
+
+.env
+k8s/configs
+
+*.swp
