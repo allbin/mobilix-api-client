@@ -2,7 +2,7 @@
 
 ### Example use
 ```typescript
-const client = new MobilixApiClient({
+const client = MobilixApiClient({
   baseUrl: 'https://api.mobilix.dev.allbin.se',
   token: () => getTokenPromise(),
 })
