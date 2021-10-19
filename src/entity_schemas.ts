@@ -1,6 +1,7 @@
 import call from './call';
 
-import { MobilixClientOptions } from './options';
+import type { MobilixClientOptions } from './options';
+import type { ApiEntitySchemaRequest, ApiEntitySchema } from './api';
 
 export interface EntitySchemaOperations {
   list: () => Promise<ApiEntitySchema[]>;
