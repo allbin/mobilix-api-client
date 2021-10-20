@@ -1,3 +1,9 @@
+export type ApiColumnSetRequest = {
+  entity_type_id: string;
+  name: string;
+  columns: Array<string>;
+};
+
 export type ApiColumnSet = {
   id: string;
   /**
@@ -11,29 +17,6 @@ export type ApiColumnSet = {
   meta: ApiMetadata;
 } & ApiColumnSetRequest;
 
-export type ApiColumnSetRequest = {
-  entity_type_id: string;
-  columns: Array<string>;
-};
-
-export type ApiContractor = {
-  id: string;
-  /**
-   * Contractor owner tenant ID
-   */
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiContractorRequest;
-
-export type ApiContractorAgent = {
-  id: string;
-  /**
-   * Contractor owner tenant ID
-   */
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiContractorAgentRequest;
-
 export type ApiContractorAgentRequest = {
   user_id: string;
   /**
@@ -45,6 +28,15 @@ export type ApiContractorAgentRequest = {
    */
   admin: boolean;
 };
+
+export type ApiContractorAgent = {
+  id: string;
+  /**
+   * Contractor owner tenant ID
+   */
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiContractorAgentRequest;
 
 export type ApiContractorRequest = {
   name: string;
@@ -62,27 +54,14 @@ export type ApiContractorRequest = {
   address?: string;
 };
 
-export type ApiEntity = {
+export type ApiContractor = {
   id: string;
   /**
-   * Entity owner tenant ID
+   * Contractor owner tenant ID
    */
   tenant_id: string;
   meta: ApiMetadata;
-} & ApiEntityRequest;
-
-export type ApiEntityChangeSet = {
-  id: string;
-  /**
-   * ChangeSet owner tenant ID
-   */
-  tenant_id: string;
-  /**
-   * ChangeSet author
-   */
-  user_id: string;
-  meta: ApiMetadata;
-} & ApiEntityChangeSetRequest;
+} & ApiContractorRequest;
 
 export type ApiEntityChangeSetRequest = {
   /**
@@ -102,6 +81,19 @@ export type ApiEntityChangeSetRequest = {
   >;
 };
 
+export type ApiEntityChangeSet = {
+  id: string;
+  /**
+   * ChangeSet owner tenant ID
+   */
+  tenant_id: string;
+  /**
+   * ChangeSet author
+   */
+  user_id: string;
+  meta: ApiMetadata;
+} & ApiEntityChangeSetRequest;
+
 export type ApiEntityRequest = {
   /**
    * EntityType Identifier
@@ -119,18 +111,6 @@ export type ApiEntityRequest = {
     boolean | number | string | Array<number> | Array<string>
   >;
 };
-
-export type ApiEntitySchema = {
-  /**
-   * Schema ID
-   */
-  id: string;
-  /**
-   * Schema owner tenant ID
-   */
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiEntitySchemaRequest;
 
 export type ApiEntitySchemaGroup = {
   /**
@@ -203,15 +183,36 @@ export type ApiEntitySchemaRequest = {
   };
 };
 
+export type ApiEntitySchema = {
+  /**
+   * Schema ID
+   */
+  id: string;
+  /**
+   * Schema owner tenant ID
+   */
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiEntitySchemaRequest;
+
+export type ApiEntity = {
+  id: string;
+  /**
+   * Entity owner tenant ID
+   */
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiEntityRequest;
+
+export type ApiEntityTypeRequest = {
+  name: string;
+};
+
 export type ApiEntityType = {
   id: string;
   tenant_id: string;
   meta: ApiMetadata;
 } & ApiEntityTypeRequest;
-
-export type ApiEntityTypeRequest = {
-  name: string;
-};
 
 export type ApiError = {
   /**
@@ -219,8 +220,6 @@ export type ApiError = {
    */
   message: string;
 };
-
-export type ApiFilter = Array<ApiFilterCondition>;
 
 export type ApiFilterCondition = {
   /**
@@ -256,6 +255,12 @@ export type ApiFilterCondition = {
   value?: string | number | boolean | Array<number> | Array<string>;
 };
 
+export type ApiFilterSetRequest = {
+  entity_type_id: string;
+  name: string;
+  filters: Array<ApiFilter>;
+};
+
 export type ApiFilterSet = {
   id: string;
   /**
@@ -269,16 +274,7 @@ export type ApiFilterSet = {
   meta: ApiMetadata;
 } & ApiFilterSetRequest;
 
-export type ApiFilterSetRequest = {
-  entity_type_id: string;
-  filters: Array<ApiFilter>;
-};
-
-export type ApiInstruction = {
-  id: string;
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiInstructionRequest;
+export type ApiFilter = Array<ApiFilterCondition>;
 
 export type ApiInstructionRequest = {
   /**
@@ -295,6 +291,12 @@ export type ApiInstructionRequest = {
   tags?: Array<string>;
 };
 
+export type ApiInstruction = {
+  id: string;
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiInstructionRequest;
+
 export type ApiMetadata = {
   /**
    * ISO 8601 date time
@@ -310,6 +312,11 @@ export type ApiMetadata = {
   deleted_at?: string;
 };
 
+export type ApiTagRequest = {
+  name: string;
+  description?: string;
+};
+
 export type ApiTag = {
   id: string;
   /**
@@ -319,9 +326,8 @@ export type ApiTag = {
   meta: ApiMetadata;
 } & ApiTagRequest;
 
-export type ApiTagRequest = {
-  name: string;
-  description?: string;
+export type ApiUserProfileRequest = {
+  profile: Record<string, number | string | boolean | any[]>;
 };
 
 export type ApiUserProfile = {
@@ -333,19 +339,9 @@ export type ApiUserProfile = {
   meta: ApiMetadata;
 } & ApiUserProfileRequest;
 
-export type ApiUserProfileRequest = {
-  profile: Record<string, number | string | boolean | any[]>;
-};
-
 export type ApiValidationError = ApiError & {
   errors?: Array<ExpressValidationError>;
 };
-
-export type ApiWorkOrder = {
-  id: string;
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiWorkOrderRequest;
 
 export type ApiWorkOrderRequest = {
   /**
@@ -372,6 +368,12 @@ export type ApiWorkOrderRequest = {
    */
   assignee?: string;
 };
+
+export type ApiWorkOrder = {
+  id: string;
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiWorkOrderRequest;
 
 export type ExpressValidationError = {
   /**
