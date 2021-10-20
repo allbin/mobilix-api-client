@@ -237,6 +237,8 @@ export type ApiFilterCondition = {
   operator:
     | 'known'
     | 'unknown'
+    | 'true'
+    | 'false'
     | 'eq'
     | 'neq'
     | 'gt'
