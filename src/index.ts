@@ -49,5 +49,5 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   workOrders: workOrderOperations(opts),
 });
 
-export { MobilixApiClient };
+export { MobilixApiClient, IMobilixApiClient };
 export * from './api';
