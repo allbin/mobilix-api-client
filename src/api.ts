@@ -100,6 +100,10 @@ export type ApiEntityRequest = {
    */
   entity_type_id: string;
   /**
+   * Tenant-assigned ID. Only unique in combination with entity_type_id
+   */
+  local_id: string;
+  /**
    * ChangeSet ID for the last applied changeset
    */
   changeset_head?: string;
