@@ -384,7 +384,14 @@ export type ApiWorkOrderRequest = {
   /**
    * WorkOrder current state
    */
-  state: 'created' | 'accepted' | 'completed' | 'approved';
+  state:
+    | 'created'
+    | 'blocked'
+    | 'accepted'
+    | 'completed'
+    | 'rejected'
+    | 'approved'
+    | 'cancelled';
   tags: Array<string>;
   contractors: Array<string>;
   entities: Array<string>;
