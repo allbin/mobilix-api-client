@@ -361,7 +361,11 @@ export type ApiUserProfile = {
 } & ApiUserProfileRequest;
 
 export type ApiValidationError = ApiError & {
-  errors?: Array<ExpressValidationError>;
+  errors: Array<ExpressValidationError>;
+};
+
+export type ApiWorkOrderConflictError = ApiError & {
+  conflicts: Array<string>;
 };
 
 export type ApiWorkOrderRequest = {
