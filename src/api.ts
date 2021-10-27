@@ -1,3 +1,17 @@
+export type ApiAttachmentEvent = {
+  type: 'attachment';
+  data: {
+    /**
+     * Attachment MIME type
+     */
+    content_type: string;
+    /**
+     * Attachment ID
+     */
+    attachment: string;
+  };
+};
+
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
@@ -110,7 +124,7 @@ export type ApiEntityChangeSet = {
   meta: ApiMetadata;
 } & ApiEntityChangeSetRequest;
 
-export type ApiEntityEventClientRequest = ApiCommentEvent | ApiImageEvent;
+export type ApiEntityEventClientRequest = ApiCommentEvent | ApiAttachmentEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
@@ -122,7 +136,7 @@ export type ApiEntityEventRequestBase = {
 export type ApiEntityEventRequest = ApiEntityEventRequestBase &
   (
     | ApiCommentEvent
-    | ApiImageEvent
+    | ApiAttachmentEvent
     | ApiEntityChangeSetEvent
     | ApiEntityWorkOrderStateEvent
   );
@@ -337,16 +351,6 @@ export type ApiFilterSet = {
 
 export type ApiFilter = Array<ApiFilterCondition>;
 
-export type ApiImageEvent = {
-  type: 'image';
-  data: {
-    /**
-     * Image ID
-     */
-    image: string;
-  };
-};
-
 export type ApiInstructionRequest = {
   /**
    * Instruction title
@@ -447,7 +451,7 @@ export type ApiWorkOrderConflictError = ApiError & {
   conflicts: Array<string>;
 };
 
-export type ApiWorkOrderEventClientRequest = ApiCommentEvent | ApiImageEvent;
+export type ApiWorkOrderEventClientRequest = ApiCommentEvent | ApiAttachmentEvent;
 
 export type ApiWorkOrderEventRequestBase = {
   /**
@@ -459,7 +463,7 @@ export type ApiWorkOrderEventRequestBase = {
 export type ApiWorkOrderEventRequest = ApiWorkOrderEventRequestBase &
   (
     | ApiCommentEvent
-    | ApiImageEvent
+    | ApiAttachmentEvent
     | ApiWorkOrderChangeSetEvent
     | ApiWorkOrderStateEvent
   );
