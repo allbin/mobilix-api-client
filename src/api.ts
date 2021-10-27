@@ -451,7 +451,9 @@ export type ApiWorkOrderConflictError = ApiError & {
   conflicts: Array<string>;
 };
 
-export type ApiWorkOrderEventClientRequest = ApiCommentEvent | ApiAttachmentEvent;
+export type ApiWorkOrderEventClientRequest =
+  | ApiCommentEvent
+  | ApiAttachmentEvent;
 
 export type ApiWorkOrderEventRequestBase = {
   /**
