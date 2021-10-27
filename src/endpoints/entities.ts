@@ -3,7 +3,13 @@ import querystring from 'querystring';
 import call from '../call';
 
 import { MobilixClientOptions } from '../options';
-import { ApiEntityRequest, ApiEntity, ApiEntityChangeSet } from '../api';
+import {
+  ApiEntityRequest,
+  ApiEntityEventClientRequest,
+  ApiEntity,
+  ApiEntityEvent,
+  ApiEntityChangeSet,
+} from '../api';
 
 export interface EntityOperations {
   list: (entity_type_id?: string) => Promise<ApiEntity[]>;
@@ -11,11 +17,16 @@ export interface EntityOperations {
   create: (entity: ApiEntityRequest) => Promise<ApiEntity>;
   update: (id: string, entity: ApiEntityRequest) => Promise<ApiEntity>;
   delete: (id: string) => Promise<ApiEntity>;
-  listChangeSets: (entity_type_id: string) => Promise<ApiEntityChangeSet[]>;
+  listChangeSets: (entity_id: string) => Promise<ApiEntityChangeSet[]>;
   getChangeSet: (
-    entity_type_id: string,
+    entity_id: string,
     changeset_id: string,
   ) => Promise<ApiEntityChangeSet>;
+  listEvents: (entity_id: string) => Promise<ApiEntityEvent[]>;
+  createEvent: (
+    entity_id: string,
+    event: ApiEntityEventClientRequest,
+  ) => Promise<ApiEntityEvent>;
 }
 
 export const entityOperations = (
@@ -43,16 +54,28 @@ export const entityOperations = (
     }),
   delete: async (id) =>
     await call<undefined, ApiEntity>('DELETE', `/entities/${id}`, { ...opts }),
-  listChangeSets: async (entity_type_id) =>
+  listChangeSets: async (entity_id) =>
     await call<undefined, ApiEntityChangeSet[]>(
       'GET',
-      `/entities/${entity_type_id}/changesets`,
+      `/entities/${entity_id}/changesets`,
       { ...opts },
     ),
-  getChangeSet: async (entity_type_id, changeset_id) =>
+  getChangeSet: async (entity_id, changeset_id) =>
     await call<undefined, ApiEntityChangeSet>(
       'GET',
-      `/entities/${entity_type_id}/changesets/${changeset_id}`,
+      `/entities/${entity_id}/changesets/${changeset_id}`,
       { ...opts },
+    ),
+  listEvents: async (entity_id) =>
+    await call<undefined, ApiEntityEvent[]>(
+      'GET',
+      `/entities/${entity_id}/events`,
+      { ...opts },
+    ),
+  createEvent: async (entity_id, event) =>
+    await call<ApiEntityEventClientRequest, ApiEntityEvent>(
+      'POST',
+      `/entities/${entity_id}/events`,
+      { ...opts, body: event },
     ),
 });

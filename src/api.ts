@@ -17,6 +17,16 @@ export type ApiColumnSet = {
   meta: ApiMetadata;
 } & ApiColumnSetRequest;
 
+export type ApiCommentEvent = {
+  type: 'comment';
+  data: {
+    /**
+     * Comment text
+     */
+    text: string;
+  };
+};
+
 export type ApiContractorAgentRequest = {
   user_id: string;
   /**
@@ -63,6 +73,12 @@ export type ApiContractor = {
   meta: ApiMetadata;
 } & ApiContractorRequest;
 
+export type ApiEntityChangeSetEvent = {
+  type: 'changeset';
+  changeset_id: string;
+  prev_changeset_id?: string;
+};
+
 export type ApiEntityChangeSetRequest = {
   /**
    * EntityChangeSet Identifier
@@ -93,6 +109,32 @@ export type ApiEntityChangeSet = {
   user_id: string;
   meta: ApiMetadata;
 } & ApiEntityChangeSetRequest;
+
+export type ApiEntityEventClientRequest = ApiCommentEvent | ApiImageEvent;
+
+export type ApiEntityEventRequestBase = {
+  /**
+   * ID of affected Entity
+   */
+  entity_id: string;
+};
+
+export type ApiEntityEventRequest = ApiEntityEventRequestBase &
+  (
+    | ApiCommentEvent
+    | ApiImageEvent
+    | ApiEntityChangeSetEvent
+    | ApiEntityWorkOrderStateEvent
+  );
+
+export type ApiEntityEvent = {
+  id: string;
+  /**
+   * User who caused the event
+   */
+  user_id: string;
+  meta: ApiMetadata;
+} & ApiEntityEventRequest;
 
 export type ApiEntityRequest = {
   /**
@@ -218,6 +260,19 @@ export type ApiEntityType = {
   meta: ApiMetadata;
 } & ApiEntityTypeRequest;
 
+export type ApiEntityWorkOrderStateEvent = {
+  type: 'workorder:state';
+  workorder_id: string;
+  state:
+    | 'created'
+    | 'blocked'
+    | 'accepted'
+    | 'completed'
+    | 'rejected'
+    | 'approved'
+    | 'cancelled';
+};
+
 export type ApiError = {
   /**
    * Error message
@@ -281,6 +336,16 @@ export type ApiFilterSet = {
 } & ApiFilterSetRequest;
 
 export type ApiFilter = Array<ApiFilterCondition>;
+
+export type ApiImageEvent = {
+  type: 'image';
+  data: {
+    /**
+     * Image ID
+     */
+    image: string;
+  };
+};
 
 export type ApiInstructionRequest = {
   /**
@@ -364,9 +429,49 @@ export type ApiValidationError = ApiError & {
   errors: Array<ExpressValidationError>;
 };
 
+export type ApiWorkOrderChangeSetEvent = {
+  type: 'changeset';
+  data: {
+    entity_id: string;
+    /**
+     * Key-value dictionary based on EntitySchema for EntityType
+     */
+    properties: Record<
+      string,
+      boolean | number | string | Array<number> | Array<string>
+    >;
+  };
+};
+
 export type ApiWorkOrderConflictError = ApiError & {
   conflicts: Array<string>;
 };
+
+export type ApiWorkOrderEventClientRequest = ApiCommentEvent | ApiImageEvent;
+
+export type ApiWorkOrderEventRequestBase = {
+  /**
+   * ID of affected WorkOrder
+   */
+  workorder_id: string;
+};
+
+export type ApiWorkOrderEventRequest = ApiWorkOrderEventRequestBase &
+  (
+    | ApiCommentEvent
+    | ApiImageEvent
+    | ApiWorkOrderChangeSetEvent
+    | ApiWorkOrderStateEvent
+  );
+
+export type ApiWorkOrderEvent = {
+  id: string;
+  /**
+   * User who caused the event
+   */
+  user_id: string;
+  meta: ApiMetadata;
+} & ApiWorkOrderEventRequest;
 
 export type ApiWorkOrderRequest = {
   /**
@@ -408,6 +513,20 @@ export type ApiWorkOrderRequest = {
    */
   assignee?: string;
   location?: ApiLocation;
+};
+
+export type ApiWorkOrderStateEvent = {
+  type: 'state';
+  data: {
+    state:
+      | 'created'
+      | 'blocked'
+      | 'accepted'
+      | 'completed'
+      | 'rejected'
+      | 'approved'
+      | 'cancelled';
+  };
 };
 
 export type ApiWorkOrder = {

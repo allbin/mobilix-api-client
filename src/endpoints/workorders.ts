@@ -1,7 +1,12 @@
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
-import type { ApiWorkOrderRequest, ApiWorkOrder } from '../api';
+import type {
+  ApiWorkOrderRequest,
+  ApiWorkOrder,
+  ApiWorkOrderEventClientRequest,
+  ApiWorkOrderEvent,
+} from '../api';
 
 export interface WorkOrderOperations {
   list: () => Promise<ApiWorkOrder[]>;
@@ -9,6 +14,11 @@ export interface WorkOrderOperations {
   create: (workorder: ApiWorkOrderRequest) => Promise<ApiWorkOrder>;
   update: (id: string, workorder: ApiWorkOrderRequest) => Promise<ApiWorkOrder>;
   delete: (id: string) => Promise<ApiWorkOrder>;
+  listEvents: (workorder_id: string) => Promise<ApiWorkOrderEvent[]>;
+  createEvent: (
+    workorder_id: string,
+    event: ApiWorkOrderEventClientRequest,
+  ) => Promise<ApiWorkOrderEvent>;
 }
 
 export const workOrderOperations = (
@@ -34,4 +44,16 @@ export const workOrderOperations = (
     await call<undefined, ApiWorkOrder>('DELETE', `/workorders/${id}`, {
       ...opts,
     }),
+  listEvents: async (workorder_id) =>
+    await call<undefined, ApiWorkOrderEvent[]>(
+      'GET',
+      `/workorders/${workorder_id}/events`,
+      { ...opts },
+    ),
+  createEvent: async (workorder_id, event) =>
+    await call<ApiWorkOrderEventClientRequest, ApiWorkOrderEvent>(
+      'POST',
+      `/workorders/${workorder_id}/events`,
+      { ...opts, body: event },
+    ),
 });
