@@ -1,17 +1,3 @@
-export type ApiAttachmentEvent = {
-  type: 'attachment';
-  data: {
-    /**
-     * Attachment MIME type
-     */
-    content_type: string;
-    /**
-     * Attachment ID
-     */
-    attachment: string;
-  };
-};
-
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
@@ -37,7 +23,17 @@ export type ApiCommentEvent = {
     /**
      * Comment text
      */
-    text: string;
+    text?: string;
+    attachments: Array<{
+      /**
+       * MIME type
+       */
+      content_type: string;
+      /**
+       * Attachment ID
+       */
+      attachment?: string;
+    }>;
   };
 };
 
@@ -124,7 +120,7 @@ export type ApiEntityChangeSet = {
   meta: ApiMetadata;
 } & ApiEntityChangeSetRequest;
 
-export type ApiEntityEventClientRequest = ApiCommentEvent | ApiAttachmentEvent;
+export type ApiEntityEventClientRequest = ApiCommentEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
@@ -134,12 +130,7 @@ export type ApiEntityEventRequestBase = {
 };
 
 export type ApiEntityEventRequest = ApiEntityEventRequestBase &
-  (
-    | ApiCommentEvent
-    | ApiAttachmentEvent
-    | ApiEntityChangeSetEvent
-    | ApiEntityWorkOrderStateEvent
-  );
+  (ApiCommentEvent | ApiEntityChangeSetEvent | ApiEntityWorkOrderStateEvent);
 
 export type ApiEntityEvent = {
   id: string;
@@ -451,9 +442,7 @@ export type ApiWorkOrderConflictError = ApiError & {
   conflicts: Array<string>;
 };
 
-export type ApiWorkOrderEventClientRequest =
-  | ApiCommentEvent
-  | ApiAttachmentEvent;
+export type ApiWorkOrderEventClientRequest = ApiCommentEvent;
 
 export type ApiWorkOrderEventRequestBase = {
   /**
@@ -463,12 +452,7 @@ export type ApiWorkOrderEventRequestBase = {
 };
 
 export type ApiWorkOrderEventRequest = ApiWorkOrderEventRequestBase &
-  (
-    | ApiCommentEvent
-    | ApiAttachmentEvent
-    | ApiWorkOrderChangeSetEvent
-    | ApiWorkOrderStateEvent
-  );
+  (ApiCommentEvent | ApiWorkOrderChangeSetEvent | ApiWorkOrderStateEvent);
 
 export type ApiWorkOrderEvent = {
   id: string;
