@@ -420,6 +420,26 @@ export type ApiUserProfile = {
   meta: ApiMetadata;
 } & ApiUserProfileRequest;
 
+export type ApiUser = {
+  /**
+   * User ID
+   */
+  user_id: string;
+  /**
+   * User full name
+   */
+  name: string;
+  /**
+   * User email
+   */
+  email: string;
+  /**
+   * Is user an administrator?
+   */
+  admin?: boolean;
+  contractors?: Array<string>;
+};
+
 export type ApiValidationError = ApiError & {
   errors: Array<ExpressValidationError>;
 };
