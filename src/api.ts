@@ -85,8 +85,10 @@ export type ApiContractor = {
 
 export type ApiEntityChangeSetEvent = {
   type: 'changeset';
-  changeset_id: string;
-  prev_changeset_id?: string;
+  data: {
+    changeset_id: string;
+    prev_changeset_id?: string;
+  };
 };
 
 export type ApiEntityChangeSetRequest = {
@@ -267,15 +269,17 @@ export type ApiEntityType = {
 
 export type ApiEntityWorkOrderStateEvent = {
   type: 'workorder:state';
-  workorder_id: string;
-  state:
-    | 'created'
-    | 'blocked'
-    | 'accepted'
-    | 'completed'
-    | 'rejected'
-    | 'approved'
-    | 'cancelled';
+  data: {
+    workorder_id: string;
+    state:
+      | 'created'
+      | 'blocked'
+      | 'accepted'
+      | 'completed'
+      | 'rejected'
+      | 'approved'
+      | 'cancelled';
+  };
 };
 
 export type ApiError = {
