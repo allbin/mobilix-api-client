@@ -24,7 +24,7 @@ export type ApiCommentEvent = {
      * Comment text
      */
     text?: string;
-    attachments: Array<{
+    attachments?: Array<{
       /**
        * MIME type
        */
@@ -32,7 +32,11 @@ export type ApiCommentEvent = {
       /**
        * Attachment ID
        */
-      attachment?: string;
+      attachment: string;
+      /**
+       * Filename or description
+       */
+      name?: string;
     }>;
   };
 };
