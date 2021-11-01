@@ -1,3 +1,24 @@
+export type ApiAttachmentRequest = {
+  /**
+   * File name
+   */
+  name: string;
+  /**
+   * MIME-type
+   */
+  mime_type: string;
+};
+
+export type ApiAttachment = {
+  id: string;
+  tenant_id: string;
+  /**
+   * Uploader User ID
+   */
+  user_id: string;
+  meta: ApiMetadata;
+} & ApiAttachmentRequest;
+
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
@@ -28,7 +49,7 @@ export type ApiCommentEvent = {
       /**
        * MIME type
        */
-      content_type: string;
+      mime_type: string;
       /**
        * Attachment ID
        */
@@ -534,9 +555,17 @@ export type ApiWorkOrderRequest = {
 };
 
 export type ApiWorkOrderStateEvent = {
-  type: 'state';
+  type: 'prev_state' | 'state';
   data: {
     state:
+      | 'created'
+      | 'blocked'
+      | 'accepted'
+      | 'completed'
+      | 'rejected'
+      | 'approved'
+      | 'cancelled';
+    prev_state?:
       | 'created'
       | 'blocked'
       | 'accepted'
