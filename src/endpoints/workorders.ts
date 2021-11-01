@@ -6,6 +6,7 @@ import type {
   ApiWorkOrder,
   ApiWorkOrderEventClientRequest,
   ApiWorkOrderEvent,
+  ApiAttachment,
 } from '../api';
 
 export interface WorkOrderOperations {
@@ -18,6 +19,7 @@ export interface WorkOrderOperations {
   createEvent: (
     workorder_id: string,
     event: ApiWorkOrderEventClientRequest,
+    files?: File[],
   ) => Promise<ApiWorkOrderEvent>;
 }
 
@@ -50,10 +52,40 @@ export const workOrderOperations = (
       `/workorders/${workorder_id}/events`,
       { ...opts },
     ),
-  createEvent: async (workorder_id, event) =>
-    await call<ApiWorkOrderEventClientRequest, ApiWorkOrderEvent>(
+  createEvent: async (workorder_id, event, files) => {
+    const uploads =
+      files && files.length
+        ? files.map((file) => {
+            const data = new FormData();
+            data.append('file', file);
+            return call<undefined, ApiAttachment>('POST', `/attachments`, {
+              ...opts,
+              form: data,
+            });
+          })
+        : [];
+
+    const uploaded = await Promise.all(uploads);
+
+    return await call<ApiWorkOrderEventClientRequest, ApiWorkOrderEvent>(
       'POST',
       `/workorders/${workorder_id}/events`,
-      { ...opts, body: event },
-    ),
+      {
+        ...opts,
+        body: uploaded.length
+          ? {
+              ...event,
+              data: {
+                ...event.data,
+                attachments: uploaded.map((upload) => ({
+                  name: upload.name,
+                  mime_type: upload.mime_type,
+                  attachment: upload.id,
+                })),
+              },
+            }
+          : event,
+      },
+    );
+  },
 });
