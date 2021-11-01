@@ -22,14 +22,15 @@ const call = async <R, T>(
         }
     : {};
 
+  req.headers = {
+    ...(opts.body ? { 'Content-Type': 'application/json' } : {}),
+    ...auth,
+  };
+
   if (opts.form) {
     req.data = opts.form;
   } else if (opts.body) {
     req.data = opts.body;
-    req.headers = {
-      'Content-Type': 'application/json',
-      ...auth,
-    };
   }
 
   return await axios.request<T>({ url, ...req }).then((r) => r.data);
