@@ -5,6 +5,7 @@ export * from './entities';
 export * from './entity_schemas';
 export * from './entity_types';
 export * from './filtersets';
+export * from './instructions';
 export * from './tags';
 export * from './users';
 export * from './user_profiles';

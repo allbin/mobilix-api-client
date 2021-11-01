@@ -15,6 +15,8 @@ import {
   EntityTypeOperations,
   filterSetOperations,
   FilterSetOperations,
+  instructionOperations,
+  InstructionOperations,
   tagOperations,
   TagOperations,
   userOperations,
@@ -33,6 +35,7 @@ interface IMobilixApiClient {
   entitySchemas: EntitySchemaOperations;
   entityTypes: EntityTypeOperations;
   filterSets: FilterSetOperations;
+  instructions: InstructionOperations;
   tags: TagOperations;
   users: UserOperations;
   userProfiles: UserProfileOperations;
@@ -47,6 +50,7 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   entitySchemas: entitySchemaOperations(opts),
   entityTypes: entityTypeOperations(opts),
   filterSets: filterSetOperations(opts),
+  instructions: instructionOperations(opts),
   tags: tagOperations(opts),
   users: userOperations(opts),
   userProfiles: userProfileOperations(opts),
