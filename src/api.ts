@@ -371,27 +371,6 @@ export type ApiFilterSet = {
 
 export type ApiFilter = Array<ApiFilterCondition>;
 
-export type ApiInstructionRequest = {
-  /**
-   * Instruction title
-   */
-  title: string;
-  /**
-   * Paragraphs containing task instructions
-   */
-  texts: Array<string>;
-  /**
-   * List of tag ids
-   */
-  tags?: Array<string>;
-};
-
-export type ApiInstruction = {
-  id: string;
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiInstructionRequest;
-
 export type ApiLocation = {
   /**
    * Coordinate Reference System
@@ -511,6 +490,27 @@ export type ApiWorkOrderEvent = {
   user_id: string;
   meta: ApiMetadata;
 } & ApiWorkOrderEventRequest;
+
+export type ApiWorkOrderInstructionRequest = {
+  /**
+   * Instruction title
+   */
+  title: string;
+  /**
+   * Paragraphs containing task instructions
+   */
+  texts: Array<string>;
+  /**
+   * List of tag ids
+   */
+  tags?: Array<string>;
+};
+
+export type ApiWorkOrderInstruction = {
+  id: string;
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiWorkOrderInstructionRequest;
 
 export type ApiWorkOrderRequest = {
   /**
