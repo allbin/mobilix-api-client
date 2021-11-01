@@ -555,7 +555,7 @@ export type ApiWorkOrderRequest = {
 };
 
 export type ApiWorkOrderStateEvent = {
-  type: 'prev_state' | 'state';
+  type: 'state';
   data: {
     state:
       | 'created'
