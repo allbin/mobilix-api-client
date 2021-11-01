@@ -4,6 +4,7 @@ import call from '../call';
 
 import { MobilixClientOptions } from '../options';
 import {
+  ApiAttachment,
   ApiEntityRequest,
   ApiEntityEventClientRequest,
   ApiEntity,
@@ -26,6 +27,7 @@ export interface EntityOperations {
   createEvent: (
     entity_id: string,
     event: ApiEntityEventClientRequest,
+    files?: File[],
   ) => Promise<ApiEntityEvent>;
 }
 
@@ -72,10 +74,40 @@ export const entityOperations = (
       `/entities/${entity_id}/events`,
       { ...opts },
     ),
-  createEvent: async (entity_id, event) =>
-    await call<ApiEntityEventClientRequest, ApiEntityEvent>(
+  createEvent: async (entity_id, event, files) => {
+    const uploads =
+      files && files.length
+        ? files.map((file) => {
+            const data = new FormData();
+            data.append('file', file);
+            return call<undefined, ApiAttachment>('POST', `/attachments`, {
+              ...opts,
+              form: data,
+            });
+          })
+        : [];
+
+    const uploaded = await Promise.all(uploads);
+
+    return await call<ApiEntityEventClientRequest, ApiEntityEvent>(
       'POST',
       `/entities/${entity_id}/events`,
-      { ...opts, body: event },
-    ),
+      {
+        ...opts,
+        body: uploaded.length
+          ? {
+              ...event,
+              data: {
+                ...event.data,
+                attachments: uploaded.map((upload) => ({
+                  name: upload.name,
+                  mime_type: upload.mime_type,
+                  attachment: upload.id,
+                })),
+              },
+            }
+          : event,
+      },
+    );
+  },
 });
