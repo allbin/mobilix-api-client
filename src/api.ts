@@ -330,12 +330,19 @@ export type ApiFilter = Array<ApiFilterCondition>;
 
 export type ApiFilterCondition = ApiFilterConditionBase &
   (
+    | ApiFilterConditionBooleanNoArgs
+    | ApiFilterConditionStringManyArgs
     | ApiFilterConditionStringNoArgs
     | ApiFilterConditionStringSingleArg
-    | ApiFilterConditionStringManyArgs
+    | ApiFilterConditionEnumManyArgs
     | ApiFilterConditionEnumNoArgs
+    | ApiFilterConditionEnumSingleArg
+    | ApiFilterConditionNumberManyArgs
     | ApiFilterConditionNumberNoArgs
+    | ApiFilterConditionNumberSingleArg
+    | ApiFilterConditionDateTimeManyArgs
     | ApiFilterConditionDateTimeNoArgs
+    | ApiFilterConditionDateTimeSingleArg
     | ApiFilterConditionPhotoNoArgs
     | ApiFilterConditionStringArrayNoArgs
     | ApiFilterConditionStringArrayManyArgs
