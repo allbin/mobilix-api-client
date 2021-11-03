@@ -626,7 +626,12 @@ export type ApiWorkOrderEventRequestBase = {
 };
 
 export type ApiWorkOrderEventRequest = ApiWorkOrderEventRequestBase &
-  (ApiCommentEvent | ApiWorkOrderChangeSetEvent | ApiWorkOrderStateEvent);
+  (
+    | ApiCommentEvent
+    | ApiWorkOrderChangeSetEvent
+    | ApiWorkOrderStateEvent
+    | ApiWorkOrderTagEvent
+  );
 
 export type ApiWorkOrderEvent = {
   id: string;
@@ -719,6 +724,14 @@ export type ApiWorkOrderStateEvent = {
       | 'rejected'
       | 'approved'
       | 'cancelled';
+  };
+};
+
+export type ApiWorkOrderTagEvent = {
+  type: 'tag';
+  data: {
+    tags_added?: Array<string>;
+    tags_removed?: Array<string>;
   };
 };
 
