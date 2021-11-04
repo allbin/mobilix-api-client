@@ -8,7 +8,7 @@ import { ApiContractorAgentRequest, ApiContractorAgent } from '../api';
 export interface ContractorAgentOperations {
   list: (contractor_id?: string) => Promise<ApiContractorAgent[]>;
   get: (id: string) => Promise<ApiContractorAgent>;
-  create: (agent: ApiContractorAgent) => Promise<ApiContractorAgent>;
+  create: (agent: ApiContractorAgentRequest) => Promise<ApiContractorAgent>;
   createMany: (
     agents: ApiContractorAgentRequest[],
   ) => Promise<ApiContractorAgent[]>;
