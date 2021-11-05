@@ -563,6 +563,17 @@ export type ApiTenant = {
   name: string;
 };
 
+export type ApiUserContractor = {
+  /**
+   * Contractor ID
+   */
+  id: string;
+  /**
+   * User is admin for this Contractor
+   */
+  admin?: boolean;
+};
+
 export type ApiUserProfileRequest = {
   profile: Record<string, number | string | boolean | any[]>;
 };
@@ -593,7 +604,7 @@ export type ApiUser = {
    * Is user an administrator?
    */
   admin?: boolean;
-  contractors?: Array<string>;
+  contractors?: Array<ApiUserContractor>;
 };
 
 export type ApiValidationError = ApiError & {
