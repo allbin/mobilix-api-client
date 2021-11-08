@@ -532,11 +532,13 @@ export type ApiPermission =
   | 'tags:update'
   | 'tags:delete'
   | 'users:read'
+  | 'workorders:approve'
+  | 'workorders:cancel'
   | 'workorders:create'
   | 'workorders:delete'
+  | 'workorders:execute'
   | 'workorders:read'
-  | 'workorders:update'
-  | 'workorders:execute';
+  | 'workorders:update';
 
 export type ApiTagRequest = {
   name: string;
