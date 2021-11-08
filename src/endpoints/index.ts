@@ -1,3 +1,4 @@
+export * from './attachments';
 export * from './columnsets';
 export * from './contractor_agents';
 export * from './contractors';
