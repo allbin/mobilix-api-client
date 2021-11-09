@@ -308,14 +308,7 @@ export type ApiEntityWorkOrderStateEvent = {
   type: 'workorder:state';
   data: {
     workorder_id: string;
-    state:
-      | 'created'
-      | 'blocked'
-      | 'accepted'
-      | 'completed'
-      | 'rejected'
-      | 'approved'
-      | 'cancelled';
+    state: ApiWorkOrderState;
   };
 };
 
@@ -691,17 +684,7 @@ export type ApiWorkOrderRequest = {
    * WorkOrder instructions
    */
   description: string;
-  /**
-   * WorkOrder current state
-   */
-  state:
-    | 'created'
-    | 'blocked'
-    | 'accepted'
-    | 'completed'
-    | 'rejected'
-    | 'approved'
-    | 'cancelled';
+  state: ApiWorkOrderState;
   tags: Array<string>;
   contractors: Array<string>;
   entities: Array<string>;
@@ -723,24 +706,19 @@ export type ApiWorkOrderRequest = {
 export type ApiWorkOrderStateEvent = {
   type: 'state';
   data: {
-    state:
-      | 'created'
-      | 'blocked'
-      | 'accepted'
-      | 'completed'
-      | 'rejected'
-      | 'approved'
-      | 'cancelled';
-    prev_state?:
-      | 'created'
-      | 'blocked'
-      | 'accepted'
-      | 'completed'
-      | 'rejected'
-      | 'approved'
-      | 'cancelled';
+    state: ApiWorkOrderState;
+    prev_state?: ApiWorkOrderState;
   };
 };
+
+export type ApiWorkOrderState =
+  | 'created'
+  | 'blocked'
+  | 'accepted'
+  | 'completed'
+  | 'rejected'
+  | 'approved'
+  | 'cancelled';
 
 export type ApiWorkOrderTagEvent = {
   type: 'tag';
