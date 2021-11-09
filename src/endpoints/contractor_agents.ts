@@ -9,9 +9,6 @@ export interface ContractorAgentOperations {
   list: (contractor_id?: string) => Promise<ApiContractorAgent[]>;
   get: (id: string) => Promise<ApiContractorAgent>;
   create: (agent: ApiContractorAgentRequest) => Promise<ApiContractorAgent>;
-  createMany: (
-    agents: ApiContractorAgentRequest[],
-  ) => Promise<ApiContractorAgent[]>;
   update: (
     id: string,
     agent: ApiContractorAgentRequest,
@@ -41,21 +38,12 @@ export const contractorAgentOperations = (
       },
     ),
   create: async (agent) =>
-    await call<ApiContractorAgentRequest[], ApiContractorAgent[]>(
+    await call<ApiContractorAgentRequest, ApiContractorAgent>(
       'POST',
       `/contractor_agents`,
       {
         ...opts,
-        body: [agent],
-      },
-    ).then((r) => r[0]),
-  createMany: async (agents) =>
-    await call<ApiContractorAgentRequest[], ApiContractorAgent[]>(
-      'POST',
-      `/contractor_agents`,
-      {
-        ...opts,
-        body: agents,
+        body: agent,
       },
     ),
   update: async (id: string, agent: ApiContractorAgentRequest) =>
