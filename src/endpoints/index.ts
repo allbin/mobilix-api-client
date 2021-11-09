@@ -5,6 +5,7 @@ export * from './contractors';
 export * from './entities';
 export * from './entity_schemas';
 export * from './entity_types';
+export * from './error_reports';
 export * from './filtersets';
 export * from './tags';
 export * from './users';

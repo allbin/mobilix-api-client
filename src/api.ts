@@ -312,6 +312,29 @@ export type ApiEntityWorkOrderStateEvent = {
   };
 };
 
+export type ApiErrorReportRequest = {
+  entity_id: string;
+  destination: string;
+  property_key: string;
+  /**
+   * In case of enum properties, the report can be specifically for one of the alternatives
+   */
+  property_value?: string;
+  /**
+   * Description of error
+   */
+  message?: string;
+};
+
+export type ApiErrorReport = {
+  id: string;
+  /**
+   * Contractor owner tenant ID
+   */
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiErrorReportRequest;
+
 export type ApiError = {
   /**
    * Error message
@@ -515,12 +538,12 @@ export type ApiPermission =
   | 'entities:read'
   | 'entities:update'
   | 'entity-types:create'
-  | 'incident-report:create'
+  | 'error-reports:create'
   | 'instructions:create'
   | 'instructions:delete'
   | 'instructions:read'
   | 'instructions:update'
-  | 'police-report:create'
+  | 'police-reports:create'
   | 'tags:create'
   | 'tags:update'
   | 'tags:delete'
