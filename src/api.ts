@@ -182,6 +182,7 @@ export type ApiEntityEventRequest = ApiEntityEventRequestBase &
     | ApiEntityChangeSetEvent
     | ApiEntityWorkOrderStateEvent
     | ApiEntityErrorReportEvent
+    | ApiEntityPoliceReportEvent
   );
 
 export type ApiEntityEvent = {
@@ -192,6 +193,14 @@ export type ApiEntityEvent = {
   user_id: string;
   meta: ApiMetadata;
 } & ApiEntityEventRequest;
+
+export type ApiEntityPoliceReportEvent = {
+  type: 'police-report';
+  data: {
+    police_report_id: string;
+    action: 'filed' | 'cleared';
+  };
+};
 
 export type ApiEntityRequest = {
   /**
