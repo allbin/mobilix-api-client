@@ -631,6 +631,10 @@ export type ApiUser = {
   /**
    * User ID
    */
+  id: string;
+  /**
+   * User ID
+   */
   user_id: string;
   meta: ApiMetadata;
   /**
