@@ -159,6 +159,14 @@ export type ApiEntityChangeSet = {
   meta: ApiMetadata;
 } & ApiEntityChangeSetRequest;
 
+export type ApiEntityErrorReportEvent = {
+  type: 'error-report';
+  data: {
+    error_report_id: string;
+    action: 'filed' | 'cleared';
+  };
+};
+
 export type ApiEntityEventClientRequest = ApiCommentEvent;
 
 export type ApiEntityEventRequestBase = {
@@ -169,7 +177,12 @@ export type ApiEntityEventRequestBase = {
 };
 
 export type ApiEntityEventRequest = ApiEntityEventRequestBase &
-  (ApiCommentEvent | ApiEntityChangeSetEvent | ApiEntityWorkOrderStateEvent);
+  (
+    | ApiCommentEvent
+    | ApiEntityChangeSetEvent
+    | ApiEntityWorkOrderStateEvent
+    | ApiEntityErrorReportEvent
+  );
 
 export type ApiEntityEvent = {
   id: string;
@@ -610,6 +623,7 @@ export type ApiUser = {
    * User ID
    */
   user_id: string;
+  meta: ApiMetadata;
   /**
    * User full name
    */
