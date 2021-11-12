@@ -224,6 +224,37 @@ export type ApiEntityRequest = {
   >;
 };
 
+/**
+ * Schema property key
+ */
+export type ApiEntitySchemaExtras = Record<
+  string,
+  {
+    /**
+     * Display property. Table column width.
+     */
+    width?: number;
+    number_options?: {
+      /**
+       * Display property. Use digit grouping.
+       */
+      grouping: boolean;
+    };
+    /**
+     * Key is enum alternative or "default"
+     */
+    support_emails?: Record<string, string>;
+    /**
+     * Instructions from WorkOrder Admin to Contractors regarding how to collect information for this property.
+     */
+    help_text?: string;
+    /**
+     * Attachment ID
+     */
+    help_image?: string;
+  }
+>;
+
 export type ApiEntitySchemaGroup = {
   /**
    * Group ID
@@ -293,6 +324,7 @@ export type ApiEntitySchemaRequest = {
      */
     properties: Array<ApiEntitySchemaProp>;
   };
+  extras?: ApiEntitySchemaExtras;
 };
 
 export type ApiEntitySchema = {
