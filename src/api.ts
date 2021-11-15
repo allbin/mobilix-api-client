@@ -31,6 +31,10 @@ export type ApiColumnSet = {
    * ColumnSet owner tenant ID
    */
   tenant_id: string;
+  /**
+   * ColumnSet author user ID
+   */
+  user_id: string;
   meta: ApiMetadata;
 } & ApiColumnSetRequest;
 
@@ -148,6 +152,10 @@ export type ApiEntityChangeSet = {
    * ChangeSet owner tenant ID
    */
   tenant_id: string;
+  /**
+   * ChangeSet author
+   */
+  user_id: string;
   meta: ApiMetadata;
 } & ApiEntityChangeSetRequest;
 
@@ -179,6 +187,10 @@ export type ApiEntityEventRequest = ApiEntityEventRequestBase &
 
 export type ApiEntityEvent = {
   id: string;
+  /**
+   * User who caused the event
+   */
+  user_id: string;
   meta: ApiMetadata;
 } & ApiEntityEventRequest;
 
@@ -525,6 +537,10 @@ export type ApiFilterSet = {
    * FilterSet owner tenant ID
    */
   tenant_id: string;
+  /**
+   * FilterSet author user ID
+   */
+  user_id: string;
   meta: ApiMetadata;
 } & ApiFilterSetRequest;
 
@@ -551,10 +567,6 @@ export type ApiMetadata = {
    */
   created_at: string;
   /**
-   * Auth0 User ID
-   */
-  created_by: string;
-  /**
    * ISO 8601 date time
    */
   updated_at: string;
@@ -562,10 +574,6 @@ export type ApiMetadata = {
    * ISO 8601 date time
    */
   deleted_at?: string;
-  /**
-   * Auth0 User ID
-   */
-  deleted_by?: string;
 };
 
 export type ApiPermission =
@@ -717,6 +725,10 @@ export type ApiWorkOrderEventRequest = ApiWorkOrderEventRequestBase &
 
 export type ApiWorkOrderEvent = {
   id: string;
+  /**
+   * User who caused the event
+   */
+  user_id: string;
   meta: ApiMetadata;
 } & ApiWorkOrderEventRequest;
 
