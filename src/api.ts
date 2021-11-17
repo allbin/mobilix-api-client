@@ -599,6 +599,7 @@ export type ApiPermission =
   | 'tags:create'
   | 'tags:update'
   | 'tags:delete'
+  | 'users:invite'
   | 'users:read'
   | 'workorders:approve'
   | 'workorders:cancel'
@@ -621,6 +622,18 @@ export type ApiTag = {
   tenant_id: string;
   meta: ApiMetadata;
 } & ApiTagRequest;
+
+export type ApiTenantInvitationRequest = {
+  email: string;
+};
+
+export type ApiTenantInvitation = {
+  /**
+   * Invitation ID
+   */
+  id: string;
+  meta: ApiMetadata;
+} & ApiTenantInvitationRequest;
 
 export type ApiTenant = {
   /**

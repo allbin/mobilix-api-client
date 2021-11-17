@@ -19,6 +19,8 @@ import {
   ErrorReportOperations,
   filterSetOperations,
   FilterSetOperations,
+  invitationOperations,
+  InvitationOperations,
   tagOperations,
   TagOperations,
   userOperations,
@@ -41,6 +43,7 @@ interface IMobilixApiClient {
   entityTypes: EntityTypeOperations;
   errorReports: ErrorReportOperations;
   filterSets: FilterSetOperations;
+  invitations: InvitationOperations;
   tags: TagOperations;
   users: UserOperations;
   userProfiles: UserProfileOperations;
@@ -58,6 +61,7 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   entityTypes: entityTypeOperations(opts),
   errorReports: errorReportOperations(opts),
   filterSets: filterSetOperations(opts),
+  invitations: invitationOperations(opts),
   tags: tagOperations(opts),
   users: userOperations(opts),
   userProfiles: userProfileOperations(opts),

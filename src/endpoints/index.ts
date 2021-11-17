@@ -7,6 +7,7 @@ export * from './entity_schemas';
 export * from './entity_types';
 export * from './error_reports';
 export * from './filtersets';
+export * from './invitations';
 export * from './tags';
 export * from './users';
 export * from './user_profiles';

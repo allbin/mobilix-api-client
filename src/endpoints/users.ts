@@ -4,12 +4,15 @@ import type { MobilixClientOptions } from '../options';
 import type { ApiUser } from '../api';
 
 export interface UserOperations {
+  refresh: () => Promise<void>;
   list: () => Promise<ApiUser[]>;
   createAdmin: (user_id: string) => Promise<void>;
   removeAdmin: (user_id: string) => Promise<void>;
 }
 
 export const userOperations = (opts: MobilixClientOptions): UserOperations => ({
+  refresh: async () =>
+    await call<undefined, undefined>('POST', `/users/refresh`, { ...opts }),
   list: async () =>
     await call<undefined, ApiUser[]>('GET', `/users`, { ...opts }),
   createAdmin: async (user_id) =>
