@@ -159,7 +159,9 @@ export type ApiEntityErrorReportEvent = {
   };
 };
 
-export type ApiEntityEventClientRequest = ApiCommentEvent;
+export type ApiEntityEventClientRequest =
+  | ApiCommentEvent
+  | ApiEntityPoliceReportEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
@@ -185,8 +187,10 @@ export type ApiEntityEvent = {
 export type ApiEntityPoliceReportEvent = {
   type: 'police-report';
   data: {
-    police_report_id: string;
-    action: 'filed' | 'cleared';
+    /**
+     * Optional message to use a email body
+     */
+    message?: string;
   };
 };
 

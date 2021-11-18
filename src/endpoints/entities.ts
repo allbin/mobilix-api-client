@@ -89,24 +89,34 @@ export const entityOperations = (
 
     const uploaded = await Promise.all(uploads);
 
+    const body: ApiEntityEventClientRequest =
+      event.type === 'comment'
+        ? {
+            type: 'comment',
+            data: uploaded.length
+              ? {
+                  ...event.data,
+                  attachments: uploaded.map((upload) => ({
+                    name: upload.name,
+                    mime_type: upload.mime_type,
+                    attachment: upload.id,
+                  })),
+                }
+              : { ...event.data },
+          }
+        : {
+            type: 'police-report',
+            data: {
+              ...event.data,
+            },
+          };
+
     return await call<ApiEntityEventClientRequest, ApiEntityEvent>(
       'POST',
       `/entities/${entity_id}/events`,
       {
         ...opts,
-        body: uploaded.length
-          ? {
-              ...event,
-              data: {
-                ...event.data,
-                attachments: uploaded.map((upload) => ({
-                  name: upload.name,
-                  mime_type: upload.mime_type,
-                  attachment: upload.id,
-                })),
-              },
-            }
-          : event,
+        body,
       },
     );
   },
