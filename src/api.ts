@@ -159,7 +159,9 @@ export type ApiEntityErrorReportEvent = {
   };
 };
 
-export type ApiEntityEventClientRequest = ApiCommentEvent | ApiEntityPoliceReportEvent;
+export type ApiEntityEventClientRequest =
+  | ApiCommentEvent
+  | ApiEntityPoliceReportEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
