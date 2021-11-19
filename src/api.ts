@@ -159,9 +159,7 @@ export type ApiEntityErrorReportEvent = {
   };
 };
 
-export type ApiEntityEventClientRequest =
-  | ApiCommentEvent
-  | ApiEntityPoliceReportEvent;
+export type ApiEntityEventClientRequest = ApiCommentEvent | ApiEntityPoliceReportEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
@@ -412,7 +410,7 @@ export type ApiFilterConditionBooleanNoArgs = {
 
 export type ApiFilterConditionDateTimeManyArgs = {
   type: 'date';
-  operator: 'before' | 'after';
+  operator: 'between' | 'not_between';
   value: Array<string>;
 };
 
