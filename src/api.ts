@@ -223,6 +223,10 @@ export type ApiEntitySchemaExtras = Record<
   string,
   {
     /**
+     * UI input adornment text (generally used with number fields to display units)
+     */
+    adornment?: string;
+    /**
      * Display property. Table column width.
      */
     width?: number;

@@ -17,6 +17,9 @@ export interface EntityOperations {
   get: (id: string) => Promise<ApiEntity>;
   create: (entity: ApiEntityRequest) => Promise<ApiEntity>;
   update: (id: string, entity: ApiEntityRequest) => Promise<ApiEntity>;
+  updateMany: (
+    entities: Record<string, ApiEntityRequest>,
+  ) => Promise<Record<string, ApiEntity>>;
   delete: (id: string) => Promise<ApiEntity>;
   listChangeSets: (entity_id: string) => Promise<ApiEntityChangeSet[]>;
   getChangeSet: (
@@ -54,6 +57,15 @@ export const entityOperations = (
       ...opts,
       body: entity,
     }),
+  updateMany: async (entities) =>
+    await call<Record<string, ApiEntityRequest>, Record<string, ApiEntity>>(
+      'PUT',
+      `/entities`,
+      {
+        ...opts,
+        body: entities,
+      },
+    ),
   delete: async (id) =>
     await call<undefined, ApiEntity>('DELETE', `/entities/${id}`, { ...opts }),
   listChangeSets: async (entity_id) =>
