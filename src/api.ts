@@ -301,14 +301,6 @@ export type ApiEntitySchemaProp = {
    * If property type is enum, this field must exist and contain a list of acceptable values
    */
   alternatives?: Array<string>;
-  /**
-   * Information for Contractors from Transit Authority
-   */
-  help_text?: string;
-  /**
-   * URL referencing image to be presented together with help_text
-   */
-  help_image?: string;
 };
 
 export type ApiEntitySchemaRequest = {
