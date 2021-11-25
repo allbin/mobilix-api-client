@@ -223,6 +223,10 @@ export type ApiEntitySchemaExtras = Record<
   string,
   {
     /**
+     * Hides the property from all listings in UI (except for schema management)
+     */
+    hidden?: boolean;
+    /**
      * UI input adornment text (generally used with number fields to display units)
      */
     adornment?: string;
