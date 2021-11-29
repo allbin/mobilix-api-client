@@ -1,6 +1,6 @@
 {
   "name": "@allbin/mobilix-api-client",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "description": "Client for mobilix-api",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
