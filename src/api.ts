@@ -249,7 +249,7 @@ export type ApiEntitySchemaExtras = Record<
     /**
      * Key is enum alternative or "default"
      */
-    support_emails?: Record<string, string>;
+    support_urls?: Record<string, string>;
     /**
      * Instructions from WorkOrder Admin to Contractors regarding how to collect information for this property.
      */
