@@ -15,6 +15,7 @@ import {
 export interface EntityOperations {
   list: (entity_type_id?: string) => Promise<ApiEntity[]>;
   get: (id: string) => Promise<ApiEntity>;
+  getMany: (ids: string[]) => Promise<ApiEntity[]>;
   create: (entity: ApiEntityRequest) => Promise<ApiEntity>;
   update: (id: string, entity: ApiEntityRequest) => Promise<ApiEntity>;
   updateMany: (
@@ -47,6 +48,12 @@ export const entityOperations = (
   },
   get: async (id) =>
     await call<undefined, ApiEntity>('GET', `/entities/${id}`, { ...opts }),
+  getMany: async (ids) =>
+    await call<undefined, ApiEntity[]>(
+      'GET',
+      `/entities?ids=${ids.join(',')}`,
+      { ...opts },
+    ),
   create: async (entity) =>
     await call<ApiEntityRequest, ApiEntity>('POST', `/entities`, {
       ...opts,
