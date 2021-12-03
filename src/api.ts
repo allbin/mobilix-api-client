@@ -366,6 +366,9 @@ export type ApiEntityWorkOrderStateEvent = {
 
 export type ApiErrorReportRequest = {
   entity_id: string;
+  /**
+   * Email or URL
+   */
   destination: string;
   property_key: string;
   /**
@@ -535,6 +538,10 @@ export type ApiFilterSet = {
    * FilterSet owner tenant ID
    */
   tenant_id: string;
+  /**
+   * Contractor ID of creator
+   */
+  contractor_id?: string;
   meta: ApiMetadata;
 } & ApiFilterSetRequest;
 
