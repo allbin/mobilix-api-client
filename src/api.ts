@@ -615,6 +615,7 @@ export type ApiPermission =
   | 'tags:delete'
   | 'users:invite'
   | 'users:read'
+  | 'users:delete'
   | 'workorders:approve'
   | 'workorders:cancel'
   | 'workorders:create'
