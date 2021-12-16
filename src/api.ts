@@ -288,7 +288,8 @@ export type ApiEntitySchemaProp = {
     | 'enum'
     | 'number'
     | 'photo'
-    | 'string';
+    | 'string'
+    | 'location';
   /**
    * Property display name
    */
@@ -443,6 +444,11 @@ export type ApiFilterConditionEnumSingleArg = {
   value: string;
 };
 
+export type ApiFilterConditionLocationNoArgs = {
+  type: 'location';
+  operator: 'known' | 'unknown';
+};
+
 export type ApiFilterConditionNumberArrayManyArgs = {
   type: 'array:number';
   operator: 'none_of' | 'any_of' | 'all_of';
@@ -524,6 +530,7 @@ export type ApiFilterCondition = ApiFilterConditionBase &
     | ApiFilterConditionStringArrayManyArgs
     | ApiFilterConditionNumberArrayNoArgs
     | ApiFilterConditionNumberArrayManyArgs
+    | ApiFilterConditionLocationNoArgs
   );
 
 export type ApiFilterSetRequest = {
