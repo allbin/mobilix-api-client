@@ -33,6 +33,7 @@ export interface EntityOperations {
     event: ApiEntityEventClientRequest,
     files?: File[],
   ) => Promise<ApiEntityEvent>;
+  createCheckIn: (entity_id: string) => Promise<void>;
 }
 
 export const entityOperations = (
@@ -139,4 +140,8 @@ export const entityOperations = (
       },
     );
   },
+  createCheckIn: async (entity_id) =>
+    await call<undefined, undefined>('POST', `/entities/${entity_id}/checkin`, {
+      ...opts,
+    }),
 });

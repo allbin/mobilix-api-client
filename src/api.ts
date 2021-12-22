@@ -19,6 +19,16 @@ export type ApiAttachment = {
   meta: ApiMetadata;
 } & ApiAttachmentRequest;
 
+export type ApiCheckIns = {
+  contractor: Array<ApiCheckIn>;
+  admin: Array<ApiCheckIn>;
+};
+
+export type ApiCheckIn = {
+  user_id: string;
+  timestamp: string;
+};
+
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
@@ -159,9 +169,7 @@ export type ApiEntityErrorReportEvent = {
   };
 };
 
-export type ApiEntityEventClientRequest =
-  | ApiCommentEvent
-  | ApiEntityPoliceReportEvent;
+export type ApiEntityEventClientRequest = ApiCommentEvent | ApiEntityPoliceReportEvent;
 
 export type ApiEntityEventRequestBase = {
   /**
@@ -345,6 +353,7 @@ export type ApiEntity = {
    */
   tenant_id: string;
   meta: ApiMetadata;
+  checkins?: ApiCheckIns;
 } & ApiEntityRequest;
 
 export type ApiEntityTypeRequest = {
