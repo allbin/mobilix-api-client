@@ -823,6 +823,10 @@ export type ApiWorkOrderRequest = {
    */
   assignee?: string;
   location?: ApiLocation;
+  /**
+   * Ordered array of EntityIDs
+   */
+  route_plan?: Array<string>;
 };
 
 export type ApiWorkOrderStateEvent = {
