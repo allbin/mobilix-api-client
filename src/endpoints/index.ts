@@ -1,4 +1,5 @@
 export * from './attachments';
+export * from './checkin_plans';
 export * from './columnsets';
 export * from './contractor_agents';
 export * from './contractors';

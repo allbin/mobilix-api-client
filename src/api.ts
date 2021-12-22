@@ -19,6 +19,32 @@ export type ApiAttachment = {
   meta: ApiMetadata;
 } & ApiAttachmentRequest;
 
+export type ApiCheckInPlanRequest = {
+  /**
+   * CheckIn plan name
+   */
+  title: string;
+  periodicity: ApiPeriodicity;
+  /**
+   * Expected timeframe required to complete this work (expressed in number of days)
+   */
+  duration: number;
+  /**
+   * List of EntityIDs
+   */
+  entities: Array<string>;
+  /**
+   * Ordered list of EntityIDs
+   */
+  route_plan?: Array<string>;
+};
+
+export type ApiCheckInPlan = {
+  id: string;
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiCheckInPlanRequest;
+
 export type ApiCheckIns = {
   contractor: Array<ApiCheckIn>;
   admin: Array<ApiCheckIn>;
@@ -603,9 +629,28 @@ export type ApiMetadata = {
   deleted_by?: string;
 };
 
+export type ApiPeriodicityMonthly = {
+  type: 'monthly';
+  occurences: Array<ApiPeriodicityOccurence>;
+};
+
+export type ApiPeriodicityOccurence = {
+  month: number;
+  date: number;
+};
+
+export type ApiPeriodicity = ApiPeriodicityYearly | ApiPeriodicityMonthly;
+
+export type ApiPeriodicityYearly = {
+  type: 'yearly';
+  occurences: Array<ApiPeriodicityOccurence>;
+};
+
 export type ApiPermission =
   | 'administrators:create'
   | 'administrators:delete'
+  | 'checkin-plan:create'
+  | 'checkin-plan:delete'
   | 'contractors:add-admin'
   | 'contractors:add-agent'
   | 'contractors:create'

@@ -3,6 +3,8 @@ import { MobilixClientOptions } from './options';
 import {
   attachmentOperations,
   AttachmentOperations,
+  checkInPlanOperations,
+  CheckInPlanOperations,
   columnSetOperations,
   ColumnSetOperations,
   contractorAgentOperations,
@@ -35,6 +37,7 @@ import {
 
 interface IMobilixApiClient {
   attachments: AttachmentOperations;
+  checkInPlans: CheckInPlanOperations;
   columnSets: ColumnSetOperations;
   contractorAgents: ContractorAgentOperations;
   contractors: ContractorOperations;
@@ -53,6 +56,7 @@ interface IMobilixApiClient {
 
 const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   attachments: attachmentOperations(opts),
+  checkInPlans: checkInPlanOperations(opts),
   columnSets: columnSetOperations(opts),
   contractorAgents: contractorAgentOperations(opts),
   contractors: contractorOperations(opts),
