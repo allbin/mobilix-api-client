@@ -253,49 +253,48 @@ export type ApiEntityRequest = {
 };
 
 /**
- * Schema property key
+ * Map of EntityID -> ApiEntitySchemaExtra
  */
-export type ApiEntitySchemaExtras = Record<
-  string,
-  {
+export type ApiEntitySchemaExtras = Record<string, ApiEntitySchemaExtra>;
+
+export type ApiEntitySchemaExtra = {
+  /**
+   * Hides the property from all listings in UI (except for schema management)
+   */
+  hidden?: boolean;
+  /**
+   * UI input adornment text (generally used with number fields to display units)
+   */
+  adornment?: string;
+  /**
+   * Display property. Table column width.
+   */
+  width?: number;
+  number_options?: {
     /**
-     * Hides the property from all listings in UI (except for schema management)
+     * Display property. Use digit grouping.
      */
-    hidden?: boolean;
+    grouping: boolean;
+  };
+  date_options?: {
     /**
-     * UI input adornment text (generally used with number fields to display units)
+     * Whether to display as date-only or date-and-time
      */
-    adornment?: string;
-    /**
-     * Display property. Table column width.
-     */
-    width?: number;
-    number_options?: {
-      /**
-       * Display property. Use digit grouping.
-       */
-      grouping: boolean;
-    };
-    date_options?: {
-      /**
-       * Whether to display as date-only or date-and-time
-       */
-      format: 'date' | 'datetime';
-    };
-    /**
-     * Key is enum alternative or "default"
-     */
-    support_urls?: Record<string, string>;
-    /**
-     * Instructions from WorkOrder Admin to Contractors regarding how to collect information for this property.
-     */
-    help_text?: string;
-    /**
-     * Attachment ID
-     */
-    help_image?: string;
-  }
->;
+    format: 'date' | 'datetime';
+  };
+  /**
+   * Key is enum alternative or "default"
+   */
+  support_urls?: Record<string, string>;
+  /**
+   * Instructions from WorkOrder Admin to Contractors regarding how to collect information for this property.
+   */
+  help_text?: string;
+  /**
+   * Attachment ID
+   */
+  help_image?: string;
+};
 
 export type ApiEntitySchemaGroup = {
   /**
