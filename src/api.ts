@@ -628,21 +628,34 @@ export type ApiMetadata = {
   deleted_by?: string;
 };
 
-export type ApiPeriodicityMonthly = {
-  type: 'monthly';
-  occurences: Array<ApiPeriodicityOccurence>;
+export type ApiPeriodicityMonthlyOccurrence = {
+  /**
+   * One-indexed date
+   */
+  date: number;
 };
 
-export type ApiPeriodicityOccurence = {
-  month: number;
-  date: number;
+export type ApiPeriodicityMonthly = {
+  type: 'monthly';
+  occurences: Array<ApiPeriodicityMonthlyOccurrence>;
 };
 
 export type ApiPeriodicity = ApiPeriodicityYearly | ApiPeriodicityMonthly;
 
+export type ApiPeriodicityYearlyOccurrence = {
+  /**
+   * One-indexed month
+   */
+  month: number;
+  /**
+   * One-indexed date
+   */
+  date: number;
+};
+
 export type ApiPeriodicityYearly = {
   type: 'yearly';
-  occurences: Array<ApiPeriodicityOccurence>;
+  occurences: Array<ApiPeriodicityYearlyOccurrence>;
 };
 
 export type ApiPermission =
