@@ -786,7 +786,7 @@ export type ApiUser = {
 };
 
 export type ApiValidationError = ApiError & {
-  errors: Array<ExpressValidationError>;
+  errors?: Array<ExpressValidationError>;
 };
 
 export type ApiWorkOrderChangeSetEvent = {

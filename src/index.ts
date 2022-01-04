@@ -23,6 +23,8 @@ import {
   FilterSetOperations,
   invitationOperations,
   InvitationOperations,
+  rebusOperations,
+  RebusOperations,
   tagOperations,
   TagOperations,
   userOperations,
@@ -47,6 +49,7 @@ interface IMobilixApiClient {
   errorReports: ErrorReportOperations;
   filterSets: FilterSetOperations;
   invitations: InvitationOperations;
+  rebus: RebusOperations;
   tags: TagOperations;
   users: UserOperations;
   userProfiles: UserProfileOperations;
@@ -66,6 +69,7 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   errorReports: errorReportOperations(opts),
   filterSets: filterSetOperations(opts),
   invitations: invitationOperations(opts),
+  rebus: rebusOperations(opts),
   tags: tagOperations(opts),
   users: userOperations(opts),
   userProfiles: userProfileOperations(opts),
