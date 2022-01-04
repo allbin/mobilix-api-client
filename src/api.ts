@@ -637,7 +637,7 @@ export type ApiPeriodicityMonthlyOccurrence = {
 
 export type ApiPeriodicityMonthly = {
   type: 'monthly';
-  occurences: Array<ApiPeriodicityMonthlyOccurrence>;
+  occurrences: Array<ApiPeriodicityMonthlyOccurrence>;
 };
 
 export type ApiPeriodicity = ApiPeriodicityYearly | ApiPeriodicityMonthly;
@@ -655,7 +655,7 @@ export type ApiPeriodicityYearlyOccurrence = {
 
 export type ApiPeriodicityYearly = {
   type: 'yearly';
-  occurences: Array<ApiPeriodicityYearlyOccurrence>;
+  occurrences: Array<ApiPeriodicityYearlyOccurrence>;
 };
 
 export type ApiPermission =
