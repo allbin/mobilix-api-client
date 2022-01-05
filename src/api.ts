@@ -37,6 +37,10 @@ export type ApiCheckInPlanRequest = {
    * Ordered list of EntityIDs
    */
   route_plan?: Array<string>;
+  /**
+   * Required if created by an administrator. Ignored if not.
+   */
+  contractor_id?: string;
 };
 
 export type ApiCheckInPlan = {
@@ -381,6 +385,13 @@ export type ApiEntity = {
   tenant_id: string;
   meta: ApiMetadata;
   checkins?: ApiCheckIns;
+  /**
+   * Key-value dictionary based on EntitySchema for EntityType
+   */
+  derived: Record<
+    string,
+    boolean | number | string | Array<number> | Array<string>
+  >;
 } & ApiEntityRequest;
 
 export type ApiEntityTypeRequest = {
