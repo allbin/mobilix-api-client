@@ -10,6 +10,7 @@ export * from './error_reports';
 export * from './filtersets';
 export * from './invitations';
 export * from './rebus';
+export * from './recurring_workorder_plan';
 export * from './tags';
 export * from './users';
 export * from './user_profiles';

@@ -710,6 +710,40 @@ export type ApiPermission =
   | 'workorders:read'
   | 'workorders:update';
 
+export type ApiRecurringWorkOrderPlanRequest = {
+  /**
+   * Entity type
+   */
+  entity_type_id: string;
+  /**
+   * Contractor owner of this plan (null if tenant admin owned)
+   */
+  contractor_id?: string;
+  /**
+   * WorkOrder title
+   */
+  title: string;
+  /**
+   * WorkOrder instructions
+   */
+  description: string;
+  tags: Array<string>;
+  filterset_id: string;
+  periodicity: ApiPeriodicity;
+  /**
+   * Number of days before occurences to create the actual workorder
+   */
+  creation_offset: number;
+  valid_from: string;
+  valid_to?: string;
+};
+
+export type ApiRecurringWorkOrderPlan = {
+  id: string;
+  tenant_id: string;
+  meta: ApiMetadata;
+} & ApiRecurringWorkOrderPlanRequest;
+
 export type ApiTagRequest = {
   name: string;
   description?: string;
