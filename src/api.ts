@@ -693,6 +693,9 @@ export type ApiPermission =
   | 'instructions:read'
   | 'instructions:update'
   | 'police-reports:create'
+  | 'recurring-workorder-plans:create'
+  | 'recurring-workorder-plans:delete'
+  | 'recurring-workorder-plans:read'
   | 'role:admin'
   | 'role:contractor-admin'
   | 'role:contractor-agent'
@@ -720,11 +723,11 @@ export type ApiRecurringWorkOrderPlanRequest = {
    */
   contractor_id?: string;
   /**
-   * WorkOrder title
+   * WorkOrder plan title
    */
   title: string;
   /**
-   * WorkOrder instructions
+   * WorkOrder plan instructions
    */
   description: string;
   tags: Array<string>;
