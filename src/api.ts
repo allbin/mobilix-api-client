@@ -10,6 +10,9 @@ export type ApiAttachmentRequest = {
 };
 
 export type ApiAttachment = {
+  /**
+   * SHA-256 hash of original contents
+   */
   id: string;
   tenant_id: string;
   /**
