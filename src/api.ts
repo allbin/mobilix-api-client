@@ -47,6 +47,10 @@ export type ApiCheckInPlan = {
   id: string;
   tenant_id: string;
   meta: ApiMetadata;
+  /**
+   * Required if created by an administrator. Ignored if not.
+   */
+  contractor_id: string;
 } & ApiCheckInPlanRequest;
 
 export type ApiCheckIns = {
