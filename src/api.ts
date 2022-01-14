@@ -61,6 +61,7 @@ export type ApiCheckIns = {
 export type ApiCheckIn = {
   user_id: string;
   timestamp: string;
+  result?: 'workorder' | 'error_report' | 'police_report';
 };
 
 export type ApiColumnSetRequest = {
@@ -754,6 +755,14 @@ export type ApiRecurringWorkOrderPlan = {
 export type ApiTagRequest = {
   name: string;
   description?: string;
+  flags?: ApiTagSystemFlags;
+};
+
+export type ApiTagSystemFlags = {
+  /**
+   * This tag is automatically applied to workorders created as part of CheckIn functionality
+   */
+  check_in?: boolean;
 };
 
 export type ApiTag = {
