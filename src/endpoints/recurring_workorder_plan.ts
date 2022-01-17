@@ -2,7 +2,7 @@ import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
 import type {
-  ApiRecurringWorkOrderPlanRequest,
+  ApiRecurringWorkOrderPlanClientRequest,
   ApiRecurringWorkOrderPlan,
 } from '../api';
 
@@ -10,11 +10,11 @@ export interface RecurringWorkOrderPlanOperations {
   list: () => Promise<ApiRecurringWorkOrderPlan[]>;
   get: (id: string) => Promise<ApiRecurringWorkOrderPlan>;
   create: (
-    plan: ApiRecurringWorkOrderPlanRequest,
+    plan: ApiRecurringWorkOrderPlanClientRequest,
   ) => Promise<ApiRecurringWorkOrderPlan>;
   update: (
     id: string,
-    plan: ApiRecurringWorkOrderPlanRequest,
+    plan: ApiRecurringWorkOrderPlanClientRequest,
   ) => Promise<ApiRecurringWorkOrderPlan>;
   delete: (id: string) => Promise<ApiRecurringWorkOrderPlan>;
 }
@@ -39,23 +39,21 @@ export const recurringWorkOrderPlanOperations = (
       },
     ),
   create: async (plan) =>
-    await call<ApiRecurringWorkOrderPlanRequest, ApiRecurringWorkOrderPlan>(
-      'POST',
-      `/recurring_workorder_plans`,
-      {
-        ...opts,
-        body: plan,
-      },
-    ),
+    await call<
+      ApiRecurringWorkOrderPlanClientRequest,
+      ApiRecurringWorkOrderPlan
+    >('POST', `/recurring_workorder_plans`, {
+      ...opts,
+      body: plan,
+    }),
   update: async (id, plan) =>
-    await call<ApiRecurringWorkOrderPlanRequest, ApiRecurringWorkOrderPlan>(
-      'PUT',
-      `/recurring_workorder_plans/${id}`,
-      {
-        ...opts,
-        body: plan,
-      },
-    ),
+    await call<
+      ApiRecurringWorkOrderPlanClientRequest,
+      ApiRecurringWorkOrderPlan
+    >('PUT', `/recurring_workorder_plans/${id}`, {
+      ...opts,
+      body: plan,
+    }),
   delete: async (id) =>
     await call<undefined, ApiRecurringWorkOrderPlan>(
       'DELETE',

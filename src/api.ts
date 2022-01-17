@@ -10,9 +10,6 @@ export type ApiAttachmentRequest = {
 };
 
 export type ApiAttachment = {
-  /**
-   * SHA-256 hash of original contents
-   */
   id: string;
   tenant_id: string;
   /**
@@ -721,15 +718,11 @@ export type ApiPermission =
   | 'workorders:read'
   | 'workorders:update';
 
-export type ApiRecurringWorkOrderPlanRequest = {
+export type ApiRecurringWorkOrderPlanClientRequest = {
   /**
    * Entity type
    */
   entity_type_id: string;
-  /**
-   * Contractor owner of this plan (null if tenant admin owned)
-   */
-  contractor_id?: string;
   /**
    * WorkOrder plan title
    */
@@ -739,6 +732,7 @@ export type ApiRecurringWorkOrderPlanRequest = {
    */
   description: string;
   tags: Array<string>;
+  contractors?: Array<string>;
   filterset_id: string;
   periodicity: ApiPeriodicity;
   /**
@@ -749,9 +743,17 @@ export type ApiRecurringWorkOrderPlanRequest = {
   valid_to?: string;
 };
 
+export type ApiRecurringWorkOrderPlanRequest = {
+  contractor_id?: string;
+} & ApiRecurringWorkOrderPlanClientRequest;
+
 export type ApiRecurringWorkOrderPlan = {
   id: string;
   tenant_id: string;
+  /**
+   * Contractor owner of this plan (null if tenant admin owned)
+   */
+  contractor_id?: string;
   meta: ApiMetadata;
 } & ApiRecurringWorkOrderPlanRequest;
 
