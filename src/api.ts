@@ -768,6 +768,10 @@ export type ApiTagSystemFlags = {
    * This tag is automatically applied to workorders created as part of CheckIn functionality
    */
   check_in?: boolean;
+  /**
+   * This tag is automatically applied to workorders created by recorring workorder plans
+   */
+  recurring?: boolean;
 };
 
 export type ApiTag = {
@@ -934,7 +938,7 @@ export type ApiWorkOrderRequest = {
   contractors: Array<string>;
   entities: Array<string>;
   /**
-   * EntityChangeSets by EntityID
+   * ApiEntityChangeSetRequests by EntityID
    */
   entity_changesets: Record<string, ApiEntityChangeSetRequest>;
   /**
