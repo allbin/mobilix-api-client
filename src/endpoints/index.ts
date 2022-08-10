@@ -7,6 +7,7 @@ export * from './entities';
 export * from './entity_schemas';
 export * from './entity_types';
 export * from './error_reports';
+export * from './feature_licenses';
 export * from './filtersets';
 export * from './invitations';
 export * from './rebus';

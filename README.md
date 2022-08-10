@@ -16,4 +16,5 @@ Adjust path to `api.d.ts` to fit your own machine
 
 ```bash
 cat ../mobilix-api/src/types/api.d.ts | sed -e 's/^type/export type/g' > src/api.ts
+npm run lint:fix
 ```

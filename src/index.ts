@@ -19,6 +19,8 @@ import {
   EntityTypeOperations,
   errorReportOperations,
   ErrorReportOperations,
+  featureLicenseOperations,
+  FeatureLicenseOperations,
   filterSetOperations,
   FilterSetOperations,
   invitationOperations,
@@ -49,6 +51,7 @@ interface IMobilixApiClient {
   entitySchemas: EntitySchemaOperations;
   entityTypes: EntityTypeOperations;
   errorReports: ErrorReportOperations;
+  featureLicenses: FeatureLicenseOperations;
   filterSets: FilterSetOperations;
   invitations: InvitationOperations;
   rebus: RebusOperations;
@@ -70,6 +73,7 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   entitySchemas: entitySchemaOperations(opts),
   entityTypes: entityTypeOperations(opts),
   errorReports: errorReportOperations(opts),
+  featureLicenses: featureLicenseOperations(opts),
   filterSets: filterSetOperations(opts),
   invitations: invitationOperations(opts),
   rebus: rebusOperations(opts),

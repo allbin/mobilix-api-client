@@ -450,6 +450,11 @@ export type ApiError = {
   message: string;
 };
 
+/**
+ * A unique key referencing a specific feature
+ */
+export type ApiFeatureLicense = 'traffic' | 'inventory' | 'workorders';
+
 export type ApiFilterConditionBase = {
   /**
    * EntitySchemaProp key
@@ -934,6 +939,9 @@ export type ApiWorkOrderRequest = {
    */
   description: string;
   state: ApiWorkOrderState;
+  /**
+   * List of tag UUIDs
+   */
   tags: Array<string>;
   contractors: Array<string>;
   entities: Array<string>;
