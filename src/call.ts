@@ -17,9 +17,11 @@ const call = async <R, T>(
       ? {
           Authorization: `Bearer ${await opts.token()}`,
         }
-      : {
+      : typeof opts.token === 'string'
+      ? {
           Authorization: `Bearer ${opts.token}`,
         }
+      : {}
     : {};
 
   req.headers = {

@@ -806,6 +806,10 @@ export type ApiTenant = {
    */
   id: string;
   /**
+   * Organization ID
+   */
+  organization_id: string;
+  /**
    * Tenant display name
    */
   name: string;

@@ -31,6 +31,8 @@ import {
   RecurringWorkOrderPlanOperations,
   tagOperations,
   TagOperations,
+  tenantOperations,
+  TenantOperations,
   userOperations,
   UserOperations,
   userProfileOperations,
@@ -57,6 +59,7 @@ interface IMobilixApiClient {
   rebus: RebusOperations;
   recurringWorkOrderPlans: RecurringWorkOrderPlanOperations;
   tags: TagOperations;
+  tenants: TenantOperations;
   users: UserOperations;
   userProfiles: UserProfileOperations;
   workOrders: WorkOrderOperations;
@@ -79,6 +82,7 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   rebus: rebusOperations(opts),
   recurringWorkOrderPlans: recurringWorkOrderPlanOperations(opts),
   tags: tagOperations(opts),
+  tenants: tenantOperations(opts),
   users: userOperations(opts),
   userProfiles: userProfileOperations(opts),
   workOrders: workOrderOperations(opts),

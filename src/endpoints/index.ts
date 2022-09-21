@@ -13,6 +13,7 @@ export * from './invitations';
 export * from './rebus';
 export * from './recurring_workorder_plan';
 export * from './tags';
+export * from './tenants';
 export * from './users';
 export * from './user_profiles';
 export * from './workorders';
