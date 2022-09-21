@@ -35,7 +35,9 @@ const call = async <R, T>(
     req.data = opts.body;
   }
 
-  return await axios.request<T>({ url, ...req }).then((r) => r.data);
+  return await (opts.axios || axios)
+    .request<T>({ url, ...req })
+    .then((r) => r.data);
 };
 
 export default call;
