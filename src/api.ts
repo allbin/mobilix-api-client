@@ -393,7 +393,7 @@ export type ApiEntity = {
   /**
    * Key-value dictionary based on EntitySchema for EntityType
    */
-  derived: Record<
+  derived_properties: Record<
     string,
     boolean | number | string | Array<number> | Array<string>
   >;

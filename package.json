@@ -1,6 +1,6 @@
 {
   "name": "@allbin/mobilix-api-client",
-  "version": "0.21.1",
+  "version": "0.22.0",
   "description": "Client for mobilix-api",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -39,7 +39,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "@allbin/entity-logic": "^0.8.0",
     "axios": "^0.27.2",
     "luxon": "^2.0.2"
   }
