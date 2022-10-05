@@ -1,15 +1,13 @@
-import querystring from 'querystring';
-
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
 import type {
-  ApiWorkOrderRequest,
-  ApiWorkOrder,
-  ApiWorkOrderEventClientRequest,
-  ApiWorkOrderEvent,
-  ApiWorkOrderState,
   ApiAttachment,
+  ApiWorkOrder,
+  ApiWorkOrderEvent,
+  ApiWorkOrderEventClientRequest,
+  ApiWorkOrderRequest,
+  ApiWorkOrderState,
 } from '../api';
 
 export interface WorkOrderOperations {
@@ -30,7 +28,9 @@ export const workOrderOperations = (
   opts: MobilixClientOptions,
 ): WorkOrderOperations => ({
   list: async (state) => {
-    const qstring = state ? `?${querystring.stringify({ state })}` : '';
+    const qstring = state
+      ? `?${new URLSearchParams({ state }).toString()}`
+      : '';
     return await call<undefined, ApiWorkOrder[]>(
       'GET',
       `/workorders${qstring}`,

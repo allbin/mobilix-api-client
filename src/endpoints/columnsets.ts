@@ -1,9 +1,7 @@
-import querystring from 'querystring';
-
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
-import type { ApiColumnSetRequest, ApiColumnSet } from '../api';
+import type { ApiColumnSet, ApiColumnSetRequest } from '../api';
 
 export interface ColumnSetOperations {
   list: (entity_type_id?: string) => Promise<ApiColumnSet[]>;
@@ -18,7 +16,7 @@ export const columnSetOperations = (
 ): ColumnSetOperations => ({
   list: async (entity_type_id) => {
     const qstring = entity_type_id
-      ? `?${querystring.stringify({ entity_type_id })}`
+      ? `?${new URLSearchParams({ entity_type_id }).toString()}`
       : '';
     return await call<undefined, ApiColumnSet[]>(
       'GET',
