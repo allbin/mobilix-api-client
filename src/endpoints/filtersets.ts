@@ -1,9 +1,7 @@
-import querystring from 'querystring';
-
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
-import type { ApiFilterSetRequest, ApiFilterSet } from '../api';
+import type { ApiFilterSet, ApiFilterSetRequest } from '../api';
 
 export interface FilterSetOperations {
   list: (entity_type_id?: string) => Promise<ApiFilterSet[]>;
@@ -18,7 +16,7 @@ export const filterSetOperations = (
 ): FilterSetOperations => ({
   list: async (entity_type_id) => {
     const qstring = entity_type_id
-      ? `?${querystring.stringify({ entity_type_id })}`
+      ? `?${new URLSearchParams({ entity_type_id }).toString()}`
       : '';
     return await call<undefined, ApiFilterSet[]>(
       'GET',

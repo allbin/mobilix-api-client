@@ -1,15 +1,13 @@
-import querystring from 'querystring';
-
 import call from '../call';
 
 import { MobilixClientOptions } from '../options';
 import {
   ApiAttachment,
-  ApiEntityRequest,
-  ApiEntityEventClientRequest,
   ApiEntity,
-  ApiEntityEvent,
   ApiEntityChangeSet,
+  ApiEntityEvent,
+  ApiEntityEventClientRequest,
+  ApiEntityRequest,
 } from '../api';
 
 export interface EntityOperations {
@@ -41,7 +39,7 @@ export const entityOperations = (
 ): EntityOperations => ({
   list: async (entity_type_id) => {
     const qstring = entity_type_id
-      ? `?${querystring.stringify({ entity_type_id })}`
+      ? `?${new URLSearchParams({ entity_type_id }).toString()}`
       : '';
     return await call<undefined, ApiEntity[]>('GET', `/entities${qstring}`, {
       ...opts,

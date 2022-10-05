@@ -1,9 +1,7 @@
-import querystring from 'querystring';
-
 import call from '../call';
 
 import type { MobilixClientOptions } from '../options';
-import type { ApiErrorReportRequest, ApiErrorReport } from '../api';
+import type { ApiErrorReport, ApiErrorReportRequest } from '../api';
 
 export interface ErrorReportOperations {
   list: (entity_id?: string) => Promise<ApiErrorReport[]>;
@@ -16,7 +14,9 @@ export const errorReportOperations = (
   opts: MobilixClientOptions,
 ): ErrorReportOperations => ({
   list: async (entity_id) => {
-    const qstring = entity_id ? `?${querystring.stringify({ entity_id })}` : '';
+    const qstring = entity_id
+      ? `?${new URLSearchParams({ entity_id }).toString()}`
+      : '';
     return await call<undefined, ApiErrorReport[]>(
       'GET',
       `/error_reports${qstring}`,
