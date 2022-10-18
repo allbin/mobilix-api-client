@@ -453,7 +453,7 @@ export type ApiError = {
 /**
  * A unique key referencing a specific feature
  */
-export type ApiFeatureLicense = 'traffic' | 'inventory' | 'workorders';
+export type ApiFeatureLicense = 'traffic' | 'rebus_import';
 
 export type ApiFilterConditionBase = {
   /**
