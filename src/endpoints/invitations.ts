@@ -8,6 +8,7 @@ export interface InvitationOperations {
   create: (
     invitation: ApiTenantInvitationRequest,
   ) => Promise<ApiTenantInvitation>;
+  remove: (invitation_id: string) => Promise<void>;
 }
 
 export const invitationOperations = (
@@ -23,4 +24,8 @@ export const invitationOperations = (
       `/invitations`,
       { ...opts, body: { email: invitation.email } },
     ),
+  remove: async (invitation_id) =>
+    await call<undefined, void>('DELETE', `/invitations/${invitation_id}`, {
+      ...opts,
+    }),
 });
