@@ -283,7 +283,11 @@ export type ApiEntitySchemaExtra = {
     /**
      * Display property. Use digit grouping.
      */
-    grouping: boolean;
+    grouping?: boolean;
+    /**
+     * Number of decimals to round to for number properties
+     */
+    decimals?: number;
   };
   date_options?: {
     /**
@@ -464,7 +468,7 @@ export type ApiFilterConditionBase = {
 
 export type ApiFilterConditionBooleanNoArgs = {
   type: 'boolean';
-  operator: 'known' | 'unknown' | 'true' | 'false';
+  operator: 'known' | 'unknown';
 };
 
 export type ApiFilterConditionDateTimeManyArgs = {
