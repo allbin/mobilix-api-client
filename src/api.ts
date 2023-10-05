@@ -285,7 +285,11 @@ export type ApiEntitySchemaExtra = {
      */
     grouping?: boolean;
     /**
-     * Number of decimals to round to for number properties
+     * Number of decimals to round to. Will not necessarily display this number of decimals.
+     */
+    round_to_decimals?: boolean;
+    /**
+     * Fixed number of decimals to display. Will not round.
      */
     decimals?: number;
   };
