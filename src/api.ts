@@ -472,7 +472,7 @@ export type ApiFilterConditionBase = {
 
 export type ApiFilterConditionBooleanNoArgs = {
   type: 'boolean';
-  operator: 'known' | 'unknown';
+  operator: 'known' | 'unknown' | 'true' | 'false';
 };
 
 export type ApiFilterConditionDateTimeManyArgs = {
