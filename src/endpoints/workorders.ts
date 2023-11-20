@@ -10,10 +10,17 @@ import type {
   ApiWorkOrderState,
 } from '../api';
 
+interface CreateOptions {
+  auto_assign?: boolean;
+}
+
 export interface WorkOrderOperations {
   list: (state?: ApiWorkOrderState) => Promise<ApiWorkOrder[]>;
   get: (id: string) => Promise<ApiWorkOrder>;
-  create: (workorder: ApiWorkOrderRequest) => Promise<ApiWorkOrder>;
+  create: (
+    workorder: ApiWorkOrderRequest,
+    options?: CreateOptions,
+  ) => Promise<ApiWorkOrder[]>;
   update: (id: string, workorder: ApiWorkOrderRequest) => Promise<ApiWorkOrder>;
   delete: (id: string) => Promise<ApiWorkOrder>;
   listEvents: (workorder_id: string) => Promise<ApiWorkOrderEvent[]>;
@@ -41,11 +48,16 @@ export const workOrderOperations = (
     await call<undefined, ApiWorkOrder>('GET', `/workorders/${id}`, {
       ...opts,
     }),
-  create: async (workorder) =>
-    await call<ApiWorkOrderRequest, ApiWorkOrder>('POST', `/workorders`, {
-      ...opts,
-      body: workorder,
-    }),
+  create: async (workorder, options) =>
+    await call<ApiWorkOrderRequest, ApiWorkOrder[], CreateOptions>(
+      'POST',
+      `/workorders`,
+      {
+        ...opts,
+        params: options,
+        body: workorder,
+      },
+    ),
   update: async (id, workorder) =>
     await call<ApiWorkOrderRequest, ApiWorkOrder>('PUT', `/workorders/${id}`, {
       ...opts,

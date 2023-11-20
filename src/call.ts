@@ -2,10 +2,10 @@ import axios, { AxiosRequestConfig, Method } from 'axios';
 
 import { MobilixClientOptions } from './options';
 
-const call = async <R, T>(
+const call = async <R, T, P = undefined>(
   method: Method,
   url: string,
-  opts: MobilixClientOptions & { body?: R; form?: FormData },
+  opts: MobilixClientOptions & { body?: R; form?: FormData; params?: P },
 ): Promise<T> => {
   const req: AxiosRequestConfig<R | FormData> = {
     method,
@@ -27,6 +27,10 @@ const call = async <R, T>(
   req.headers = {
     ...auth,
   };
+
+  if (opts.params) {
+    req.params = opts.params;
+  }
 
   if (opts.form) {
     req.data = opts.form;
