@@ -15,11 +15,11 @@ export const userOperations = (opts: MobilixClientOptions): UserOperations => ({
   refresh: async () =>
     await call<undefined, undefined>('POST', `/users/refresh`, { ...opts }),
   list: async (ids) =>
-    await call<undefined, ApiUser[], { ids?: string[] }>('GET', `/users`, {
+    await call<undefined, ApiUser[], { ids?: string }>('GET', `/users`, {
       ...opts,
       params: ids?.length
         ? {
-            ids,
+            ids: ids.join(','),
           }
         : {},
     }),
