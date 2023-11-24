@@ -5,7 +5,7 @@ import type { ApiUser } from '../api';
 
 export interface UserOperations {
   refresh: () => Promise<void>;
-  list: () => Promise<ApiUser[]>;
+  list: (ids?: string[]) => Promise<ApiUser[]>;
   remove: (user_id: string) => Promise<void>;
   createAdmin: (user_id: string) => Promise<void>;
   removeAdmin: (user_id: string) => Promise<void>;
@@ -14,8 +14,15 @@ export interface UserOperations {
 export const userOperations = (opts: MobilixClientOptions): UserOperations => ({
   refresh: async () =>
     await call<undefined, undefined>('POST', `/users/refresh`, { ...opts }),
-  list: async () =>
-    await call<undefined, ApiUser[]>('GET', `/users`, { ...opts }),
+  list: async (ids) =>
+    await call<undefined, ApiUser[], { ids?: string[] }>('GET', `/users`, {
+      ...opts,
+      params: ids?.length
+        ? {
+            ids,
+          }
+        : {},
+    }),
   remove: async (user_id) =>
     await call<undefined, undefined>('DELETE', `/users/${user_id}`, {
       ...opts,
