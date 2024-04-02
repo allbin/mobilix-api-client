@@ -834,11 +834,11 @@ export type ApiUserInvitationRequest = {
 export type ApiUserInvitation = {
   id: string;
   user_id: string;
-  tenant_id?: string;
-  state?: 'pending' | 'accepted' | 'expired' | 'cancelled';
-  request?: ApiUserInvitationRequest;
-  created_at?: string;
-  expires_at?: string;
+  tenant_id: string;
+  state: 'pending' | 'accepted' | 'expired' | 'cancelled';
+  request: ApiUserInvitationRequest;
+  created_at: string;
+  expires_at: string;
 };
 
 export type ApiUserProfileRequest = {
