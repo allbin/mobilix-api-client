@@ -796,18 +796,6 @@ export type ApiTag = {
   meta: ApiMetadata;
 } & ApiTagRequest;
 
-export type ApiTenantInvitationRequest = {
-  email: string;
-};
-
-export type ApiTenantInvitation = {
-  /**
-   * Invitation ID
-   */
-  id: string;
-  meta: ApiMetadata;
-} & ApiTenantInvitationRequest;
-
 export type ApiTenant = {
   /**
    * Tenant ID
@@ -832,6 +820,25 @@ export type ApiUserContractor = {
    * User is admin for this Contractor
    */
   admin?: boolean;
+};
+
+export type ApiUserInvitationRequest = {
+  email: string;
+  role: 'admin' | 'contractor-admin' | 'contractor-agent';
+  /**
+   * Required if role = contractor-admin or role = contractor-agent
+   */
+  contractor_id?: string;
+};
+
+export type ApiUserInvitation = {
+  id: string;
+  user_id: string;
+  tenant_id?: string;
+  state?: 'pending' | 'accepted' | 'expired' | 'cancelled';
+  request?: ApiUserInvitationRequest;
+  created_at?: string;
+  expires_at?: string;
 };
 
 export type ApiUserProfileRequest = {
