@@ -19,7 +19,7 @@ export const userOperations = (opts: MobilixClientOptions): UserOperations => ({
     await call<undefined, ApiUser[], { ids?: string }>('GET', `/users`, {
       ...opts,
       params: {
-        ids: ids?.join(','),
+        ids: ids && ids.length > 0 ? ids.join(',') : undefined,
       },
     }),
   search: async (q) =>
