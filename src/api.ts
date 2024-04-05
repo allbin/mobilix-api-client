@@ -722,6 +722,7 @@ export type ApiPermission =
   | 'tags:delete'
   | 'users:invite'
   | 'users:read'
+  | 'users:update'
   | 'users:delete'
   | 'workorders:approve'
   | 'workorders:cancel'
@@ -877,6 +878,11 @@ export type ApiUser = {
    */
   admin?: boolean;
   contractors?: Array<ApiUserContractor>;
+};
+
+export type ApiUserUpdateRequest = {
+  name?: string;
+  role?: 'contractor-admin' | 'contractor-agent';
 };
 
 export type ApiValidationError = ApiError & {
