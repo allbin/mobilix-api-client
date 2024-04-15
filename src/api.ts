@@ -853,7 +853,7 @@ export type ApiUserInvitation = {
   tenant_id: string;
   state: 'pending' | 'accepted' | 'expired' | 'cancelled';
   email: string;
-  role: string;
+  role: 'admin' | 'contractor-admin' | 'contractor-agent';
   contractor_id?: string;
   created_at: string;
   expires_at: string;
