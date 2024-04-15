@@ -12,7 +12,7 @@ export interface InvitationOperations {
   create: (invitation: ApiUserInvitationRequest) => Promise<ApiUserInvitation>;
   update: (
     invitation_id: string,
-    invitation: ApiUserInvitationRequest,
+    invitation: ApiUserInvitationUpdateRequest,
   ) => Promise<ApiUserInvitation>;
   remove: (invitation_id: string) => Promise<void>;
 }
