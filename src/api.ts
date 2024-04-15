@@ -850,10 +850,10 @@ export type ApiUserContractor = {
 
 export type ApiUserInvitation = {
   id: string;
-  user_id: string;
   tenant_id: string;
   state: 'pending' | 'accepted' | 'expired' | 'cancelled';
   email: string;
+  role: string;
   contractor_id?: string;
   created_at: string;
   expires_at: string;
@@ -861,6 +861,14 @@ export type ApiUserInvitation = {
 
 export type ApiUserInvitationRequest = {
   email: string;
+  role: 'admin' | 'contractor-admin' | 'contractor-agent';
+  /**
+   * Required if role = contractor-admin or role = contractor-agent
+   */
+  contractor_id?: string;
+};
+
+export type ApiUserInvitationUpdateRequest = {
   role: 'admin' | 'contractor-admin' | 'contractor-agent';
   /**
    * Required if role = contractor-admin or role = contractor-agent

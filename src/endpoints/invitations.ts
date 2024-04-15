@@ -1,11 +1,19 @@
 import call from '../call';
 
 import { MobilixClientOptions } from '../options';
-import { ApiUserInvitationRequest, ApiUserInvitation } from '../api';
+import {
+  ApiUserInvitationRequest,
+  ApiUserInvitation,
+  ApiUserInvitationUpdateRequest,
+} from '../api';
 
 export interface InvitationOperations {
   list: () => Promise<ApiUserInvitation[]>;
   create: (invitation: ApiUserInvitationRequest) => Promise<ApiUserInvitation>;
+  update: (
+    invitation_id: string,
+    invitation: ApiUserInvitationRequest,
+  ) => Promise<ApiUserInvitation>;
   remove: (invitation_id: string) => Promise<void>;
 }
 
@@ -20,6 +28,12 @@ export const invitationOperations = (
     await call<ApiUserInvitationRequest, ApiUserInvitation>(
       'POST',
       `/invitations`,
+      { ...opts, body: invitation },
+    ),
+  update: async (invitation_id, invitation) =>
+    await call<ApiUserInvitationUpdateRequest, ApiUserInvitation>(
+      'PUT',
+      `/invitations/${invitation_id}`,
       { ...opts, body: invitation },
     ),
   remove: async (invitation_id) =>
