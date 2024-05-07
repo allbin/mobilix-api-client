@@ -18,7 +18,7 @@ export const tagOperations = (opts: MobilixClientOptions): TagOperations => ({
   get: async (id) =>
     await call<undefined, ApiTag>('GET', `/tags/${id}`, { ...opts }),
   getMany: async (ids) =>
-    await call<undefined, ApiTag[]>('GET', `/tags?id=${ids.join(',')}`, {
+    await call<undefined, ApiTag[]>('GET', `/tags?ids=${ids.join(',')}`, {
       ...opts,
     }),
   create: async (tag) =>
