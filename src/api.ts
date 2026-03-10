@@ -717,6 +717,7 @@ export type ApiPermission =
   | 'role:admin'
   | 'role:contractor-admin'
   | 'role:contractor-agent'
+  | 'role:viewer'
   | 'tags:create'
   | 'tags:update'
   | 'tags:delete'
@@ -853,7 +854,7 @@ export type ApiUserInvitation = {
   tenant_id: string;
   state: 'pending' | 'accepted' | 'expired' | 'cancelled';
   email: string;
-  role: 'admin' | 'contractor-admin' | 'contractor-agent';
+  role: 'admin' | 'viewer' | 'contractor-admin' | 'contractor-agent';
   contractor_id?: string;
   created_at: string;
   expires_at: string;
@@ -861,7 +862,7 @@ export type ApiUserInvitation = {
 
 export type ApiUserInvitationRequest = {
   email: string;
-  role: 'admin' | 'contractor-admin' | 'contractor-agent';
+  role: 'admin' | 'viewer' | 'contractor-admin' | 'contractor-agent';
   /**
    * Required if role = contractor-admin or role = contractor-agent
    */
@@ -869,7 +870,7 @@ export type ApiUserInvitationRequest = {
 };
 
 export type ApiUserInvitationUpdateRequest = {
-  role: 'admin' | 'contractor-admin' | 'contractor-agent';
+  role: 'admin' | 'viewer' | 'contractor-admin' | 'contractor-agent';
   /**
    * Required if role = contractor-admin or role = contractor-agent
    */
