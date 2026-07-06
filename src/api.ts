@@ -640,7 +640,7 @@ export type ApiMetadata = {
    */
   created_at: string;
   /**
-   * Auth0 User ID
+   * User id (AllAuth user UUID; historical rows may carry legacy Auth0 ids)
    */
   created_by: string;
   /**
@@ -652,7 +652,7 @@ export type ApiMetadata = {
    */
   deleted_at?: string;
   /**
-   * Auth0 User ID
+   * User id (AllAuth user UUID; historical rows may carry legacy Auth0 ids)
    */
   deleted_by?: string;
 };
@@ -688,18 +688,12 @@ export type ApiPeriodicityYearlyOccurrence = {
 };
 
 export type ApiPermission =
-  | 'administrators:create'
-  | 'administrators:delete'
   | 'checkin-plan:create'
   | 'checkin-plan:delete'
-  | 'contractors:add-admin'
-  | 'contractors:add-agent'
   | 'contractors:create'
   | 'contractors:delete'
   | 'contractors:read'
   | 'contractors:update'
-  | 'contractors:remove-admin'
-  | 'contractors:remove-agent'
   | 'entities:create'
   | 'entities:delete'
   | 'entities:read'
@@ -715,16 +709,12 @@ export type ApiPermission =
   | 'recurring-workorder-plans:delete'
   | 'recurring-workorder-plans:read'
   | 'role:admin'
+  | 'role:viewer'
   | 'role:contractor-admin'
   | 'role:contractor-agent'
-  | 'role:viewer'
   | 'tags:create'
   | 'tags:update'
   | 'tags:delete'
-  | 'users:invite'
-  | 'users:read'
-  | 'users:update'
-  | 'users:delete'
   | 'workorders:approve'
   | 'workorders:cancel'
   | 'workorders:create'
@@ -804,9 +794,9 @@ export type ApiTenant = {
    */
   id: string;
   /**
-   * Organization ID
+   * AllAuth tenant short code
    */
-  organization_id: string;
+  tenant_id: string;
   /**
    * Tenant display name
    */

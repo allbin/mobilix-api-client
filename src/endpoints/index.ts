@@ -9,7 +9,6 @@ export * from './entity_types';
 export * from './error_reports';
 export * from './feature_licenses';
 export * from './filtersets';
-export * from './invitations';
 export * from './rebus';
 export * from './recurring_workorder_plan';
 export * from './tags';
