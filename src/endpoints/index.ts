@@ -1,7 +1,6 @@
 export * from './attachments';
 export * from './checkin_plans';
 export * from './columnsets';
-export * from './contractor_agents';
 export * from './contractors';
 export * from './entities';
 export * from './entity_schemas';

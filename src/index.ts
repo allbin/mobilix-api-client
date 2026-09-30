@@ -7,8 +7,6 @@ import {
   CheckInPlanOperations,
   columnSetOperations,
   ColumnSetOperations,
-  contractorAgentOperations,
-  ContractorAgentOperations,
   contractorOperations,
   ContractorOperations,
   entityOperations,
@@ -45,7 +43,6 @@ interface IMobilixApiClient {
   attachments: AttachmentOperations;
   checkInPlans: CheckInPlanOperations;
   columnSets: ColumnSetOperations;
-  contractorAgents: ContractorAgentOperations;
   contractors: ContractorOperations;
   entities: EntityOperations;
   entitySchemas: EntitySchemaOperations;
@@ -67,7 +64,6 @@ const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
   attachments: attachmentOperations(opts),
   checkInPlans: checkInPlanOperations(opts),
   columnSets: columnSetOperations(opts),
-  contractorAgents: contractorAgentOperations(opts),
   contractors: contractorOperations(opts),
   entities: entityOperations(opts),
   entitySchemas: entitySchemaOperations(opts),

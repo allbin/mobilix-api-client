@@ -103,29 +103,21 @@ export type ApiCommentEvent = {
   };
 };
 
-export type ApiContractorAgentRequest = {
-  user_id: string;
-  /**
-   * The ID of the Contractor to which this user belongs
-   */
-  contractor_id: string;
-  /**
-   * Is this user an admin of the Contractor?
-   */
-  admin: boolean;
-};
-
-export type ApiContractorAgent = {
-  id: string;
-  /**
-   * Contractor owner tenant ID
-   */
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiContractorAgentRequest;
+/**
+ * `contractor` is one of the customer's own contractors. `road_authority` is an
+ * external road owner (e.g. a Trafikverket maintenance district) kept as a
+ * contractor so assignment, mail and scoping can be reused; clients keep road
+ * authorities out of ordinary contractor pickers and reports.
+ */
+export type ApiContractorKind = 'contractor' | 'road_authority';
 
 export type ApiContractorRequest = {
   name: string;
+  /**
+   * Defaults to `contractor` on create. When omitted on update the stored kind
+   * is kept.
+   */
+  kind?: ApiContractorKind;
   /**
    * Contact email
    */
@@ -159,6 +151,7 @@ export type ApiContractor = {
    */
   tenant_id: string;
   meta: ApiMetadata;
+  kind: ApiContractorKind;
 } & ApiContractorRequest;
 
 export type ApiEntityChangeSetEvent = {
@@ -1005,6 +998,13 @@ export type ApiWorkOrder = {
   tenant_id: string;
   meta: ApiMetadata;
 } & ApiWorkOrderRequest;
+
+export type ApiWorkOrderUnmatchedEntitiesError = ApiError & {
+  /**
+   * IDs of the entities that matched none of the candidate contractors' filtersets. No work order was created.
+   */
+  unmatched_entities: Array<string>;
+};
 
 export type ExpressValidationError = {
   /**
