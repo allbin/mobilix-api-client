@@ -103,29 +103,29 @@ export type ApiCommentEvent = {
   };
 };
 
-export type ApiContractorAgentRequest = {
-  user_id: string;
-  /**
-   * The ID of the Contractor to which this user belongs
-   */
-  contractor_id: string;
-  /**
-   * Is this user an admin of the Contractor?
-   */
-  admin: boolean;
-};
-
-export type ApiContractorAgent = {
-  id: string;
-  /**
-   * Contractor owner tenant ID
-   */
-  tenant_id: string;
-  meta: ApiMetadata;
-} & ApiContractorAgentRequest;
+/**
+ * `contractor` is one of the customer's own contractors. `road_authority` is an
+ * external road owner (e.g. a Trafikverket maintenance district) kept as a
+ * contractor so assignment, mail and scoping can be reused; clients keep road
+ * authorities out of ordinary contractor pickers and reports. A road authority
+ * is never an implicit assignment candidate: auto-assign without a candidate
+ * list and recurring plans without contractors only consider `contractor`
+ * rows, so an order reaches a road authority only when it is chosen: its id
+ * given in `contractors`, or a recurring plan owned by its own users.
+ * Choosing one is reserved for the customer's own staff: a contractor-scoped
+ * caller (token with `organization_id`) that adds a road authority to the
+ * `contractors` of a work order or a recurring plan, on create or update, gets
+ * 403. Keeping a road authority that is already there is fine.
+ */
+export type ApiContractorKind = 'contractor' | 'road_authority';
 
 export type ApiContractorRequest = {
   name: string;
+  /**
+   * Defaults to `contractor` on create. When omitted on update the stored kind
+   * is kept.
+   */
+  kind?: ApiContractorKind;
   /**
    * Contact email
    */
@@ -159,6 +159,7 @@ export type ApiContractor = {
    */
   tenant_id: string;
   meta: ApiMetadata;
+  kind: ApiContractorKind;
 } & ApiContractorRequest;
 
 export type ApiEntityChangeSetEvent = {
@@ -1005,6 +1006,13 @@ export type ApiWorkOrder = {
   tenant_id: string;
   meta: ApiMetadata;
 } & ApiWorkOrderRequest;
+
+export type ApiWorkOrderUnmatchedEntitiesError = ApiError & {
+  /**
+   * IDs of the requested entities that got no contractor: they matched none of the candidate contractors' filtersets, or the tenant has no entity with that id. No work order was created.
+   */
+  unmatched_entities: Array<string>;
+};
 
 export type ExpressValidationError = {
   /**

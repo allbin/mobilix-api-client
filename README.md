@@ -18,3 +18,11 @@ Adjust path to `api.d.ts` to fit your own machine
 cat ../mobilix-api/src/types/api.d.ts | sed -e 's/^type/export type/g' > src/api.ts
 npm run lint:fix
 ```
+
+### run the tests
+
+Tests live next to the code as `src/**/*.test.ts` and use `node:test`.
+
+```bash
+npm test
+```

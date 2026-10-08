@@ -11,7 +11,20 @@ import type {
 } from '../api';
 
 interface CreateOptions {
+  /**
+   * Assign the created work orders among the contractors based on their
+   * filtersets.
+   */
   auto_assign?: boolean;
+  /**
+   * Only together with `auto_assign`. When true and any entity matches none
+   * of the candidate contractors' filtersets, or the tenant has no entity with
+   * that id, the API responds 422 with an `ApiWorkOrderUnmatchedEntitiesError`
+   * and creates nothing. Without it such entities get a work order with no
+   * contractor. `require_match` without `auto_assign` is rejected as invalid
+   * parameters.
+   */
+  require_match?: boolean;
 }
 
 export interface WorkOrderOperations {
