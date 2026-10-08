@@ -18,10 +18,11 @@ interface CreateOptions {
   auto_assign?: boolean;
   /**
    * Only together with `auto_assign`. When true and any entity matches none
-   * of the candidate contractors' filtersets the API responds 422 with an
-   * `ApiWorkOrderUnmatchedEntitiesError` and creates nothing. Without it such
-   * entities get a work order with no contractor. `require_match` without
-   * `auto_assign` is rejected as invalid parameters.
+   * of the candidate contractors' filtersets, or the tenant has no entity with
+   * that id, the API responds 422 with an `ApiWorkOrderUnmatchedEntitiesError`
+   * and creates nothing. Without it such entities get a work order with no
+   * contractor. `require_match` without `auto_assign` is rejected as invalid
+   * parameters.
    */
   require_match?: boolean;
 }
