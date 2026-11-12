@@ -45,5 +45,8 @@ void describe('entities.createCheckIn', () => {
     assert.equal(config.method, 'post');
     assert.equal(uri, 'http://api.test/entities/entity-1/checkin');
     assert.equal(config.data, undefined);
+    // Whatever header axios adds to an empty POST is axios's own default and
+    // unchanged from 0.46.0; createCheckIn must not turn it into JSON.
+    assert.notEqual(config.headers?.['Content-Type'], 'application/json');
   });
 });
