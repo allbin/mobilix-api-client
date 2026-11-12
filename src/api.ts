@@ -984,7 +984,7 @@ export type ApiWorkOrderRequest = {
    */
   route_plan?: Array<string>;
   /**
-   * Set when the work order is created as part of a check-in on this check-in plan. The plan must exist in the tenant (422 otherwise); every tag flagged `check_in` is added to the work order. Stored on create only and ignored on update.
+   * Set when the work order is created as part of a check-in on this check-in plan. The plan must exist in the tenant, not be removed and, for a contractor user, belong to the caller's contractor (422 otherwise); every tag flagged `check_in` is added to the work order. Stored on create only and ignored on update.
    */
   checkin_plan_id?: string;
 };
