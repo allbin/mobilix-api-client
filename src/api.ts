@@ -282,6 +282,10 @@ export type ApiEntitySchemaExtra = {
    */
   hidden?: boolean;
   /**
+   * Enum alternatives hidden from pickers in the UI (except schema management). The alternatives stay valid values. Only allowed on properties of type `enum`; every entry must be one of that property's `alternatives`.
+   */
+  hidden_alternatives?: Array<string>;
+  /**
    * UI input adornment text (generally used with number fields to display units)
    */
   adornment?: string;
