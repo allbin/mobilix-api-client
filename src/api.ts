@@ -1,3 +1,21 @@
+export type ApiAreaRequest = {
+  name: string;
+  polygon: ApiPolygon;
+};
+
+export type ApiArea = {
+  id: string;
+  /**
+   * Area owner tenant ID
+   */
+  tenant_id: string;
+  /**
+   * Contractor ID of creator
+   */
+  contractor_id?: string;
+  meta: ApiMetadata;
+} & ApiAreaRequest;
+
 export type ApiAttachmentRequest = {
   /**
    * File name
@@ -53,6 +71,15 @@ export type ApiCheckInPlan = {
   contractor_id: string;
 } & ApiCheckInPlanRequest;
 
+export type ApiCheckInRequest = {
+  result?: ApiCheckInResult;
+};
+
+/**
+ * What the check-in led to
+ */
+export type ApiCheckInResult = 'workorder' | 'error_report' | 'police_report';
+
 export type ApiCheckIns = {
   contractor: Array<ApiCheckIn>;
   admin: Array<ApiCheckIn>;
@@ -63,15 +90,6 @@ export type ApiCheckIn = {
   timestamp: string;
   result?: ApiCheckInResult;
 };
-
-export type ApiCheckInRequest = {
-  result?: ApiCheckInResult;
-};
-
-/**
- * What the check-in led to
- */
-export type ApiCheckInResult = 'workorder' | 'error_report' | 'police_report';
 
 export type ApiColumnSetRequest = {
   entity_type_id: string;
@@ -532,9 +550,24 @@ export type ApiFilterConditionEnumSingleArg = {
   value: string;
 };
 
+export type ApiFilterConditionLocationAreaArg = {
+  type: 'location';
+  operator: 'in_area' | 'not_in_area';
+  /**
+   * Id of a saved area (see /areas). Before a filter set is executed the API resolves the condition to within_polygon / not_within_polygon with the area's polygon as value. An id that is not a non-deleted area in the tenant is rejected with 422 when the filter set is saved.
+   */
+  value: string;
+};
+
 export type ApiFilterConditionLocationNoArgs = {
   type: 'location';
   operator: 'known' | 'unknown';
+};
+
+export type ApiFilterConditionLocationPolygonArg = {
+  type: 'location';
+  operator: 'within_polygon' | 'not_within_polygon';
+  value: ApiPolygon;
 };
 
 export type ApiFilterConditionNumberArrayManyArgs = {
@@ -620,6 +653,8 @@ export type ApiFilterCondition = ApiFilterConditionBase &
     | ApiFilterConditionNumberArrayNoArgs
     | ApiFilterConditionNumberArrayManyArgs
     | ApiFilterConditionLocationNoArgs
+    | ApiFilterConditionLocationAreaArg
+    | ApiFilterConditionLocationPolygonArg
   );
 
 export type ApiFilterSetRequest = {
@@ -750,6 +785,11 @@ export type ApiPermission =
   | 'workorders:execute'
   | 'workorders:read'
   | 'workorders:update';
+
+/**
+ * Polygon ring as [lng, lat] WGS84 points, the same order as the meta.location property of a stop. At least three points; the ring may or may not repeat the first point at the end.
+ */
+export type ApiPolygon = Array<[number, number]>;
 
 export type ApiRecurringWorkOrderPlanClientRequest = {
   /**

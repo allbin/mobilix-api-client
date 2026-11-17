@@ -1,6 +1,8 @@
 import { MobilixClientOptions } from './options';
 
 import {
+  areaOperations,
+  AreaOperations,
   attachmentOperations,
   AttachmentOperations,
   checkInPlanOperations,
@@ -40,6 +42,7 @@ import {
 } from './endpoints';
 
 interface IMobilixApiClient {
+  areas: AreaOperations;
   attachments: AttachmentOperations;
   checkInPlans: CheckInPlanOperations;
   columnSets: ColumnSetOperations;
@@ -61,6 +64,7 @@ interface IMobilixApiClient {
 }
 
 const MobilixApiClient = (opts: MobilixClientOptions): IMobilixApiClient => ({
+  areas: areaOperations(opts),
   attachments: attachmentOperations(opts),
   checkInPlans: checkInPlanOperations(opts),
   columnSets: columnSetOperations(opts),

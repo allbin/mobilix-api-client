@@ -1,3 +1,4 @@
+export * from './areas';
 export * from './attachments';
 export * from './checkin_plans';
 export * from './columnsets';
