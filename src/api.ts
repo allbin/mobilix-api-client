@@ -91,15 +91,6 @@ export type ApiCheckIn = {
   result?: ApiCheckInResult;
 };
 
-export type ApiCheckInRequest = {
-  result?: ApiCheckInResult;
-};
-
-/**
- * What the check-in led to
- */
-export type ApiCheckInResult = 'workorder' | 'error_report' | 'police_report';
-
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
@@ -796,7 +787,7 @@ export type ApiPermission =
   | 'workorders:update';
 
 /**
- * Polygon ring as [lng, lat] WGS84 points, the same order as the meta.location property of a stop. At least three points; the ring may or may not repeat the first point at the end.
+ * Polygon ring as [lng, lat] WGS84 points, the same order as the meta.location property of a stop. Between 3 and 1000 points; the ring may or may not repeat the first point at the end.
  */
 export type ApiPolygon = Array<[number, number]>;
 
