@@ -3,6 +3,7 @@ import call from '../call';
 import { MobilixClientOptions } from '../options';
 import {
   ApiAttachment,
+  ApiCheckInRequest,
   ApiEntity,
   ApiEntityChangeSet,
   ApiEntityEvent,
@@ -31,7 +32,15 @@ export interface EntityOperations {
     event: ApiEntityEventClientRequest,
     files?: File[],
   ) => Promise<ApiEntityEvent>;
-  createCheckIn: (entity_id: string) => Promise<void>;
+  /**
+   * Records a check-in on the entity. `request.result` says what the
+   * check-in led to and is returned on the check-in in `ApiEntity.checkins`;
+   * without a request no body is sent.
+   */
+  createCheckIn: (
+    entity_id: string,
+    request?: ApiCheckInRequest,
+  ) => Promise<void>;
 }
 
 export const entityOperations = (
@@ -138,8 +147,13 @@ export const entityOperations = (
       },
     );
   },
-  createCheckIn: async (entity_id) =>
-    await call<undefined, undefined>('POST', `/entities/${entity_id}/checkin`, {
-      ...opts,
-    }),
+  createCheckIn: async (entity_id, request) =>
+    await call<ApiCheckInRequest, undefined>(
+      'POST',
+      `/entities/${entity_id}/checkin`,
+      {
+        ...opts,
+        body: request,
+      },
+    ),
 });
