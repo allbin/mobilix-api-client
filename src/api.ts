@@ -91,6 +91,15 @@ export type ApiCheckIn = {
   result?: ApiCheckInResult;
 };
 
+export type ApiCheckInRequest = {
+  result?: ApiCheckInResult;
+};
+
+/**
+ * What the check-in led to
+ */
+export type ApiCheckInResult = 'workorder' | 'error_report' | 'police_report';
+
 export type ApiColumnSetRequest = {
   entity_type_id: string;
   name: string;
