@@ -437,6 +437,14 @@ export type ApiEntity = {
     string,
     boolean | number | string | Array<number> | Array<string>
   >;
+  /**
+   * Where the entity came from. `import` is a stop loaded by one of the
+   * imports (Rebus, GTFS, DOI). `manual` is a stop created by hand through
+   * POST /entities. Set by the server; a value sent by the client is ignored.
+   * An import whose source contains the source_id of a manual stop takes it
+   * over and sets `import`; the value never goes back to `manual`.
+   */
+  origin: 'import' | 'manual';
 } & ApiEntityRequest;
 
 export type ApiEntityTypeRequest = {

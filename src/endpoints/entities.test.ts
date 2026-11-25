@@ -5,6 +5,17 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 import { entityOperations } from './entities';
 
+import type { ApiEntity, ApiEntityRequest } from '../api';
+
+const stop: ApiEntityRequest = {
+  entity_type_id: 'type-1',
+  source_id: '1234-A',
+  properties: {
+    'meta.name': 'Centralstationen',
+    'meta.location': [16.5, 59.6],
+  },
+};
+
 /** Runs a call through a real axios instance and hands back what it would send. */
 const capture = async (
   run: (ops: ReturnType<typeof entityOperations>) => Promise<unknown>,
@@ -26,6 +37,38 @@ const capture = async (
   assert.ok(sent, 'no request was sent');
   return { config: sent, uri: instance.getUri(sent) };
 };
+
+void describe('entities.create', () => {
+  void it('posts the entity request as a JSON body', async () => {
+    const { config, uri } = await capture((ops) => ops.create(stop));
+    assert.equal(config.method, 'post');
+    assert.equal(config.url, '/entities');
+    assert.equal(uri, 'http://api.test/entities');
+    assert.equal(config.data, JSON.stringify(stop));
+    assert.equal(config.headers?.['Content-Type'], 'application/json');
+  });
+});
+
+void describe('entities.delete', () => {
+  void it('sends DELETE for the entity id without a body', async () => {
+    const { config, uri } = await capture((ops) => ops.delete('entity-1'));
+    assert.equal(config.method, 'delete');
+    assert.equal(config.url, '/entities/entity-1');
+    assert.equal(uri, 'http://api.test/entities/entity-1');
+    assert.equal(config.data, undefined);
+  });
+});
+
+void describe('ApiEntity.origin', () => {
+  void it('is import or manual and set on every entity', () => {
+    // Compile-time check: the server always sets origin, so the type must
+    // require it and accept only the two values.
+    const origins: Array<ApiEntity['origin']> = ['import', 'manual'];
+    const required: 'import' | 'manual' = origins[0];
+    assert.deepEqual(origins, ['import', 'manual']);
+    assert.equal(required, 'import');
+  });
+});
 
 void describe('entities.createCheckIn', () => {
   void it('posts the result as a JSON body', async () => {
