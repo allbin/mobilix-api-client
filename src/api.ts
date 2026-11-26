@@ -257,6 +257,15 @@ export type ApiEntityEvent = {
   meta: ApiMetadata;
 } & ApiEntityEventRequest;
 
+/**
+ * Who owns the entity. `manual` is a stop created through the API (POST /entities);
+ * the stop imports leave such a stop alone when it is missing from their source.
+ * `import` is a stop created by an import, or a manual stop an import has taken over
+ * because its source_id turned up in the source. Set by the server, never by a
+ * client, and never goes back from `import` to `manual`.
+ */
+export type ApiEntityOrigin = 'import' | 'manual';
+
 export type ApiEntityPoliceReportEvent = {
   type: 'police-report';
   data: {
@@ -273,7 +282,13 @@ export type ApiEntityRequest = {
    */
   entity_type_id: string;
   /**
-   * Tenant-assigned ID from source. Only unique in combination with entity_type_id
+   * Tenant-assigned ID from source. Only unique in combination with entity_type_id,
+   * among live entities. When a stop is created through POST /entities it must be
+   * `<number>-<code>`: number without leading zeros, code letters and digits (the
+   * Rebus import's key); it is stored trimmed, case as sent, and must not match a
+   * live stop's id without regard to case. In a PUT it is ignored, except on a
+   * manually created stop edited with `entities:create`, where a different value
+   * changes the stop id under the same rules.
    */
   source_id: string;
   /**
@@ -429,6 +444,7 @@ export type ApiEntity = {
    */
   tenant_id: string;
   meta: ApiMetadata;
+  origin: ApiEntityOrigin;
   checkins?: ApiCheckIns;
   /**
    * Key-value dictionary based on EntitySchema for EntityType
