@@ -17,49 +17,65 @@ export interface EntityOperations {
   getMany: (ids: string[]) => Promise<ApiEntity[]>;
   /**
    * POST /entities. Needs `entities:create`. The created entity has
-   * `origin: 'manual'`.
+   * `origin: 'manual'`, whatever its type. For every type `source_id` must be
+   * a string (422) and a live entity of the type with the same `source_id` is
+   * 409.
    *
-   * For the entity type `stop` the API validates the request and fills in the
-   * properties the imports would compute. Other entity types are stored as
-   * sent.
+   * When the entity type's name is `stop` the API also validates the request
+   * and fills in the properties the imports would compute. Other types get
+   * the schema validation only.
    * - `source_id` is required, trimmed, in the format `<number>-<code>`:
    *   number without leading zeros, code of letters and digits, case kept as
    *   sent. Anything else is 422.
    * - 409 when a live stop in the tenant already has that `source_id`,
-   *   compared without regard to case. A deleted stop does not count, so its
-   *   ID can be used again.
-   * - `meta.name` and `meta.location` are required. The 422 message says
-   *   which one is missing.
-   * - The server computes `meta.id`, `meta.group_id`, `meta.number` and
-   *   `meta.code` from `source_id`, and `meta.county`, `meta.municipality`
-   *   and `meta.rurality` from `meta.location`. Sent values for these are
-   *   replaced. A position with no county or municipality is 422.
-   * - Other location properties in the schema default to `meta.location`,
-   *   `meta.active` to true and `meta.passing_routes` to `[]`.
+   *   compared without regard to case; the message names the stored id. A
+   *   deleted stop does not count, so its ID can be used again.
+   * - `meta.name` and `meta.location` (`[longitude, latitude]`) are
+   *   required. The 422 message says which one is missing.
    * - A `derived.*` property in the request is 422.
+   * - When the schema has them, the server computes `meta.id`,
+   *   `meta.group_id`, `meta.number` and `meta.code` from `source_id`, and
+   *   `meta.county.code`, `meta.county.name`, `meta.municipality.code`,
+   *   `meta.municipality.name` and `meta.rurality` from `meta.location`
+   *   through SCB. Sent values for these are replaced. A position outside
+   *   every county or municipality is 422; when SCB cannot be reached the
+   *   response is 500 and nothing is created.
+   * - When not sent and the schema has them: `meta.active` is true,
+   *   `meta.passing_routes` is `[]`, and every other `location` property
+   *   defaults to `meta.location`.
+   *
+   * An import whose source later contains the stop's `source_id` takes it
+   * over: `origin` becomes `'import'` for good and the stop follows the
+   * import's rules from then on.
    */
   create: (entity: ApiEntityRequest) => Promise<ApiEntity>;
   /**
    * PUT /entities/{id}. Needs `entities:update`. 404 for an entity the user
-   * cannot see, 422 for properties that fail the schema. A stale
-   * `changeset_head` is merged with the current head, not rejected.
+   * cannot see, 422 for properties that fail the schema or an
+   * `entity_type_id` that is not the entity's. A stale `changeset_head` on
+   * an ordinary edit is merged with the current head, not rejected.
    *
    * Imported stops (`origin: 'import'`) and every other entity type keep the
-   * schema's rules: only modifiable properties may change, `source_id` is
-   * ignored.
+   * schema's rules: a changed non-modifiable property is 422 "readonly
+   * property" and `source_id` is ignored.
    *
-   * A manual stop (`origin: 'manual'`) edited by a user with
+   * A manual stop (`origin: 'manual'`) edited by a tenant-level user with
    * `entities:create` may also change non-modifiable properties, e.g.
    * `meta.name`, `meta.zone`, `meta.class`, `meta.road_authority`,
    * `meta.maintenance_district` and `meta.active` (deactivate and
-   * reactivate). `derived.*` stays blocked (422). The computed properties
+   * reactivate). A changed `derived.*` stays 422. The computed properties
    * (`meta.id`, `meta.group_id`, `meta.number`, `meta.code`, county,
-   * municipality, rurality) are set by the server and ignored if sent. A new
-   * `source_id` is validated as in `create` (422 on format, 409 on a
-   * duplicate) and the ID properties are recomputed; the entity id stays, so
-   * work orders and photos follow. A new `meta.location` recomputes county,
-   * municipality and rurality. A user with only `entities:update`
-   * (contractors) gets the strict validation on manual stops too.
+   * municipality, rurality) are set by the server; sent values are replaced
+   * by the stored ones. A different `source_id` changes the stop id under
+   * the rules of `create` (422 on format, 409 on a duplicate, a change of
+   * case only is allowed) and recomputes the ID properties; the entity id
+   * stays, so work orders, photos and history follow. An id change from a
+   * stale `changeset_head` is 409. A new `meta.location` recomputes county,
+   * municipality and rurality (422 outside every county or municipality;
+   * when SCB cannot be reached the stored values are kept and the move is
+   * saved); a move from a stale `changeset_head` while another user also
+   * moved the stop is 409. Contractors (users with an `organization_id`)
+   * keep the strict rules even with `entities:create`.
    */
   update: (id: string, entity: ApiEntityRequest) => Promise<ApiEntity>;
   /**
@@ -73,13 +89,15 @@ export interface EntityOperations {
     entities: Record<string, ApiEntityRequest>,
   ) => Promise<Record<string, ApiEntity>>;
   /**
-   * DELETE /entities/{id}. Needs `entities:delete`. Returns the deleted
-   * entity. A stop can be deleted only when it is manual
-   * (`origin: 'manual'`): 422 for an imported stop, and 409 when a work order
-   * in any state, a check-in plan or a recurring work order plan refers to
-   * the stop. The 409 message says to deactivate it instead (`meta.active`
-   * through `update`). After the delete, `create` accepts the same
-   * `source_id` again.
+   * DELETE /entities/{id}. Needs `entities:delete`. Soft delete; returns the
+   * deleted entity. 404 for an entity the user cannot see. Only an entity
+   * with `origin: 'manual'` can be deleted: an imported one, which includes
+   * every entity that existed before `origin` was introduced, is 422. 409
+   * when a live work order in any state or a live check-in plan lists the
+   * entity; the message says to deactivate it instead (`meta.active` through
+   * `update`). Recurring work order plans select stops through a filter set
+   * and do not block a delete. After the delete, `create` and the imports
+   * accept the same `source_id` again.
    */
   delete: (id: string) => Promise<ApiEntity>;
   listChangeSets: (entity_id: string) => Promise<ApiEntityChangeSet[]>;
